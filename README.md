@@ -7,7 +7,6 @@ Rappel: [Ne pas oublier de demander des précisions au chargé de tp]
 	° MCD/ MLD 
 	° court texte justifiants choix et hypothèses,
 	les compléments d'infos donné par le client
-
 	° Les contraintes que le modèle ne peut pas garantir
 	(et qui devont être ajoutés lors de l'implémentation)
 
