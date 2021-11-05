@@ -10,7 +10,7 @@ Rappel: [Ne pas oublier de demander des précisions au chargé de tp]
 	° Les contraintes que le modèle ne peut pas garantir
 	(et qui devont être ajoutés lors de l'implémentation)
 
-[Premier rendu - 22 décembre en TP]
+[Premier rendu - 18 décembre en TP]
 	° Rendre le MCD (sur feuille ! imprimer ?)
 
 // Impossible de modifier le schéma une fois validé par le chargé de tp
