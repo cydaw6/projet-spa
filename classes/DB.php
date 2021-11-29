@@ -11,12 +11,16 @@ class DB
     private $user = "***REMOVED***";
     private $pass = "***REMOVED***";
 
+    /*GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to "***REMOVED***";
+    GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to "***REMOVED***";
+    GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public to "***REMOVED***";*/
+
    /* private $host = "psql.u-pem.fr";
     private $db_name = "***REMOVED***";
     private $user = "***REMOVED***.***REMOVED***";
     private $pass = "***REMOVED***";*/
 
-    public  static function getInstance(): DB
+    public static function getInstance(): DB
     {
         // Seul moyen d'obtenir l'instance unique (singleton)
         if(self::$instance == NULL){

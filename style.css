@@ -2,7 +2,23 @@
            border: 1px grey solid;
        } */
 
-:root{
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+
+/*
+font-family: 'Shadows Into Light', cursive;
+*/
+
+
+
+
+
+
+  :root{
     --main-orange: #eb651c;
     --main-warn-orange: #eb9118;
     --main-beige: #fdf3ed;
@@ -10,6 +26,7 @@
     --main-pastel-light-brown: #928161;
 }
 
+/*
 .brd-right{
     border-right: 0.5px solid rgb(200,200,200);
 
@@ -17,9 +34,7 @@
 .brd-left{
     border-left: 0.5px solid rgb(200,200,200);
 }
-
-
-
+*/
 .nav-item:hover{
     background-color: var(--main-orange);
 
@@ -30,24 +45,119 @@
     transition: 0s;
 }
 
-.logo-nav{
-    max-height: 20em;
-    height: 7em;
-    background-color: #fdf3ed;
-
-}
 
 .logo-nav img{
     max-height: 100%;
     height: auto;
 }
 
-#info-1{
+
+.section-info{
+    color: white;
+    font-weight: bold;
+    height: 30em;
     background-color: var(--main-pastel-blue);
-    min-height: 20vh;
+    overflow: hidden;
 }
 
-#info-1 .container{
+#fade-accueil-right{
+    height: 30em ;
+    width: 50%;
+    position: absolute;
+    right: 0;
+    background-image: url("assets/img/main-page-photo.jpg");
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+#fade-accueil-right div{
+    background: rgba(0, 0, 0, 0) linear-gradient(to right, rgb(110, 138, 153) 21%, rgba(110, 138, 153, 0) 100%) repeat scroll 0% 0%;
+    height: 100%;
+}
+
+
+#fade-accueil-left{
+    height: 30em ;
+    position: absolute;
+    left: 0;
+    width: 50%;
+    background-color: var(--main-pastel-blue);
+}
+.fade-accueil-container{
+    width: 99%;
+    position: absolute;
+
+    padding: 2.5em;
+
+    text-align: left;
+    font-family: 'Amatic SC', cursive;
+}
+.fade-accueil-container div #title{
+    font-size: x-large;
+
+}
+
+.fade-accueil-container div #decription{
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    font-size: large;
+    line-height: 1.4;
+    max-width: 50%;
+}
+
+#fade-accueil-container div > p{
     color: white;
-    font-weight: bolder;
+    padding: 1em;
+    vertical-align: middle;
+
+
+}
+
+.unique-font {
+    font-family: 'Patrick Hand', cursive;
+}
+
+#stat{
+    background-color: var(--main-beige);
+
+}
+
+.test{
+    max-width: 50%;
+    margin: 0 auto;
+    font-size: xxx-large;
+    line-height: 1.63;
+    padding: 4em 0 4em 0;
+
+}
+
+.orange{
+    color: var(--main-orange);
+}
+
+.footer-flex ul{
+    overflow: hidden;
+    position: relative;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    text-align: left;
+}
+
+.footer-flex ul > * {
+    margin-right: 60px;
+}
+
+.footer-flex ul > li > a{
+    color: white;
+    text-decoration: none;
+}
+
+ol, ul {
+    list-style: none;
 }
