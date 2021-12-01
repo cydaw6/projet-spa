@@ -14,8 +14,8 @@
   <body>
 
       <?php
+      require_once("./classes/__init__.php");
       require("./includes/header.html");
-      require_once("./includes/database.php");
       $res = $db->query("SELECT COUNT(*) nbr FROM animal;");
 
       ?>
@@ -51,7 +51,7 @@
           <!--Sec -->
           <div class="container-fluid text-center" id="stat" >
               <div class="container">
-                  <div class="test unique-font text-uppercase">
+                  <div class="animals-count unique-font text-uppercase">
                       <p >Actuellement <br>
                           <span class="orange">
                               <?php echo $res->fetch()["nbr"] . ' animaux'; ?>

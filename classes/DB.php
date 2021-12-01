@@ -50,5 +50,6 @@ class DB
     private function __clone()
     {
     }
+
 }
 

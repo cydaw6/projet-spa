@@ -87,14 +87,12 @@ font-family: 'Shadows Into Light', cursive;
 .fade-accueil-container{
     width: 99%;
     position: absolute;
-
-    padding: 2.5em;
-
+    padding: 4em;
     text-align: left;
     font-family: 'Amatic SC', cursive;
 }
 .fade-accueil-container div #title{
-    font-size: x-large;
+    font-size: xx-large;
 
 }
 
@@ -123,13 +121,28 @@ font-family: 'Shadows Into Light', cursive;
 
 }
 
-.test{
+.animals-count{
     max-width: 50%;
     margin: 0 auto;
-    font-size: xxx-large;
+    font-size: 3em;
     line-height: 1.63;
     padding: 4em 0 4em 0;
+}
 
+/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+    .animals-count{
+        font-size: 2em;
+    }
+
+    .fade-accueil-container div #decription{
+        font-size: small;
+    }
+
+    .fade-accueil-container div #title{
+        font-size: x-large;
+
+    }
 }
 
 .orange{
