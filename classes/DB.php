@@ -37,6 +37,8 @@ class DB
             DB::$db = new PDO('pgsql:host='.$this->host.';port=5432;dbname='.$this->db_name, $this->user, $this->pass);
             // On veut l'affichage des erreurs pdt le dev
             DB::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            //
+            DB::$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         }catch (PDOException $e){
             echo "Impossible de se connecter à la base." . $e;
         }
@@ -49,6 +51,20 @@ class DB
      */
     private function __clone()
     {
+    }
+
+    public static function db_column_names($table = " "){
+        /*
+         * Renvoie le nom des colonnes de la table correspondante
+         */
+        try{
+            $res = DB::$db->prepare("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? ORDER BY ORDINAL_POSITION ");
+            $res->execute(array($table));
+            return array_column($res->fetchAll(), "column_name");
+        }catch (PDOException $e){
+            echo $e;
+        }
+        return null;
     }
 
 }

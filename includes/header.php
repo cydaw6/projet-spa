@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="../style.css" rel="stylesheet">
 
-</head>
+<html lang="fr">
+
 <body>
 
 <div class="logo-nav">
@@ -20,10 +15,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item brd-left brd-right">
-                            <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                            <a class="nav-link active" aria-current="page" href="/">Accueil</a>
                         </li>
                         <li class="nav-item brd-left brd-right">
-                            <a class="nav-link" aria-current="page" href="administration/brouillon.php">Connexion</a>
+
+                            <a class="nav-link" aria-current="page" <?php echo 'href="/administration/login.php"'; ?> >Connexion</a>
                         </li>
                         <li class="nav-item brd-right">
                             <a class="nav-link" href="#">Refuges</a>
@@ -41,6 +37,7 @@
                         </li>
                     </ul>
                 </div>
+                <p>Nom Prénom</p>
             </div>
         </nav>
     </div>

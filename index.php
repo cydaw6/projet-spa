@@ -15,7 +15,7 @@
 
       <?php
       require_once("./classes/__init__.php");
-      require("./includes/header.html");
+      require("./includes/header.php");
       $res = $db->query("SELECT COUNT(*) nbr FROM animal;");
 
       ?>

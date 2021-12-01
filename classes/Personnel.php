@@ -2,61 +2,58 @@
 
 class Personnel
 {
-    private $id;
-    private $nom;
-    private $prenom;
-    private $adresse;
-    private $localite;
-    private $code_postal;
-    private $num_secu;
-    private $tel;
-    // --
-    private $identifiant;
-    private $mdp;
-    // --
+    public $data;
+    public $identifiants;
+    public static $nom_table = "personnel";
 
-
-    private static function db_column_names(){
-        try{
-            $res = DB::$db->query("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'personnel' ORDER BY ORDINAL_POSITION ");
-            return array_column($res->fetchAll(), "column_name");
-        }catch (PDOException $e){
-            echo $e;
+    public static function connect($login, $mdp): bool
+    {
+        /**
+         * Renvoie true si l'utilisateur (personnel) c'est correctement
+         * identifié et stocke l'instance Personnel associé
+         * dans une variable session "user"
+         */
+        $_SESSION["user"]= null;
+        $res = DB::$db->prepare("SELECT * FROM personnel NATURAL JOIN identifiant WHERE login = ?");
+        $res->execute(array($login));
+        $personnel = $res->fetch();
+        if($personnel && password_verify($mdp, $personnel["mdp"])){
+            $user = new Personnel();
+            $user->data = array_slice($personnel, 0 , -2);
+            $user->identifiants = array_slice($personnel, -2);
+            session_start();
+            $_SESSION["user"] = $user;
+            return true;
         }
-        return null;
+        return false;
     }
 
-    public function connect($identifiant, $mdp){
-        $liste_personnel = DB::$db->query("SELECT * FROM personnel NATURAL JOIN identifiant WHERE login = \'$identifiant \';");
+    public static function creer($data, $identifiants){
+        /**
+         * Renvoie un personnel avec les données en paramètre
+         */
+        $personnel = new Personnel();
+        $personnel->data = array_combine(DB::db_column_names(Personnel::$nom_table), $data);
+        $personnel->identifiants = array_combine(DB::db_column_names("identifiant"), $identifiants);
+        return $personnel;
+    }
 
-        if(password_verify($mdp, $liste_personnel->fetch()["mdp"])){
-            echo "ok";
+    private static function hash_all_psswds_in_db(){
+        /**
+         * Attention avant d'utiliser
+         * Entre conscient de ce que ça fait.
+         * Cette fonction hash tous les mots de passe de la table identifiant
+         */
+        $res = DB::$db->query("SELECT id, mdp FROM identifiant");
+        while($row = $res->fetch()){
+            $hash = hashage($row["mdp"]);
+            $query = DB::$db->prepare("UPDATE identifiant SET mdp = :mdp WHERE id = :id");
+            $query->execute(array(':mdp' => $hash, ':id' => $row["id"]));
         }
-
-        $_SESSION["personnel"] = $this;
-        return $this;
     }
 
-    public function hash_all_psswds_in_db(){
-        echo "ok";
-    }
 
-    public function toArray(){
-      $colonnes = Personnel::db_column_names();
-      $valeurs = array(
-          $this->id,
-          $this->nom,
-          $this->prenom,
-          $this->adresse,
-          $this->localite,
-          $this->code_postal,
-          $this->num_secu,
-          $this->tel,
-          $this->id
-      );
-      return array_combine($colonnes, $valeurs);
-    }
 
-    //$mdp = password_hash($_POST["pass1"], PASSWORD_DEFAULT); // hash du nouveau mdp
+
 
 }

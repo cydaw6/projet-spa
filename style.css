@@ -11,19 +11,21 @@
 
 /*
 font-family: 'Shadows Into Light', cursive;
+* { border: 1px solid red; }
+
 */
 
 
 
 
 
-
-  :root{
+:root{
     --main-orange: #eb651c;
     --main-warn-orange: #eb9118;
     --main-beige: #fdf3ed;
     --main-pastel-blue: rgb(110, 138, 153);
     --main-pastel-light-brown: #928161;
+    --main-dark-green: #133836;
 }
 
 /*
@@ -35,6 +37,11 @@ font-family: 'Shadows Into Light', cursive;
     border-left: 0.5px solid rgb(200,200,200);
 }
 */
+
+body{
+    overflow: scroll;
+}
+
 .nav-item:hover{
     background-color: var(--main-orange);
 
@@ -148,6 +155,7 @@ font-family: 'Shadows Into Light', cursive;
 .orange{
     color: var(--main-orange);
 }
+
 
 .footer-flex ul{
     overflow: hidden;
