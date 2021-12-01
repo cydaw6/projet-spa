@@ -37,7 +37,7 @@
                         </li>
                     </ul>
                 </div>
-                <p>Nom Prénom</p>
+                <!--<p>Nom Prénom</p>-->
             </div>
         </nav>
     </div>
