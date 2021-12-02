@@ -1,3 +1,6 @@
+a {
+    text-decoration: none;
+}
 
 
 .section-login{
@@ -24,15 +27,6 @@
     background-color: white;
 }
 
-
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
-@media screen and (max-width: 600px) {
-    #form-login{
-        max-width: 90%;
-
-    }
-
-}
 
 
 #liste-refuge{
@@ -104,14 +98,44 @@
     background-color: var(--main-beige);
 }
 
-.onglet{
+/*  Vue onglet */
+.form-onglet{
+    padding: 1em;
     color: black;
     background-color: var(--main-beige);
 }
+#form-recherche{
+    color: white;
+}
+
+.data-scroller{
+    padding: 0.5em;
+}
 
 
-a {
-    text-decoration: none;
+.row-data{
+    border: 1px black solid;
+    margin-bottom: 1em;
+}
+
+
+@media screen and (max-width: 600px) {
+    #form-login{
+        max-width: 90%;
+
+    }
+    .fiche-container{
+        padding: 0!important;
+
+    }
+}
+
+.right{
+    float:right;
+}
+
+.left{
+    float:left;
 }
 
 /****************************

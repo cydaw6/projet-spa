@@ -2,6 +2,8 @@
 
 require_once(dirname(__FILE__)."/DB.php");
 require_once(dirname(__FILE__)."/Personnel.php");
+require_once (dirname(__FILE__)."/Refuge.php" );
+require_once (dirname(__FILE__)."/Animal.php" );
 require_once (dirname(__FILE__)."/fonctions.php" );
 
 // Initialisation de la variable db

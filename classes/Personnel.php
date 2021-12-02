@@ -52,7 +52,17 @@ class Personnel
         }
     }
 
-
+    public function get_fonctions_par_refuges(){
+        $res = DB::$db->prepare("
+                                SELECT * 
+                                FROM exerce e
+                                JOIN fonction f ON f.fc_id = e.fc_id
+                                JOIN refuge r ON r.r_id = e.r_id
+                                WHERE e.p_id = ?
+                             ");
+        $res->execute(array($this->data["p_id"]));
+        return $res->fetchAll();
+    }
 
 
 

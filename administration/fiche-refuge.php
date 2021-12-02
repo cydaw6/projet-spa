@@ -1,8 +1,22 @@
 <?php
 require_once("../classes/__init__.php");
+session_start();
+
+// vue par défaut
+if(!isset($_SESSION["view"])){
+    $_SESSION["view"] = "animaux";
+}
+// nom de vue passée via GET devient celle par défaut
+if(isset($_GET["view"])){
+    $_SESSION["view"] = $_GET["view"];
+}
+
+$refuge = null;
+if(isset($_GET["idref"])){
+    $refuge = Refuge::get_refuge_data_by_id($_GET["idref"]);
+}
+
 ?>
-
-
     <!doctype html>
     <html lang="en">
     <head>
@@ -27,103 +41,42 @@ require_once("../classes/__init__.php");
 
         <div class="container-fluid section-fiche">
                 <div class="container">
-                        <p class="" id="title"> Nom du Refuge </p>
+                        <p class="" id="title"> <?php echo $refuge->data["r_nom"]; ?> </p>
                         <div class="fiche-container">
                             <br>
                             <div id="nav-onglet" >
-                                <a href="">
+                                <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=animaux">
                                     <div class="nav-a">
                                         <p>Animaux</p>
                                     </div>
                                 </a>
-                                <a href="./fiche-refuge.php?op=Animaux">
+                                <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=personnel">
                                     <div class="nav-a" >
                                         <p>Personnel</p>
                                     </div>
                                 </a>
-                                <a href="./fiche-refuge.php?op=Animaux">
+                                <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=transferts">
                                     <div class="nav-a" >
                                         <p>Transferts</p>
                                     </div>
                                 </a>
-                                <a href="./fiche-refuge.php?op=Animaux">
+                                <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=soins">
                                     <div class="nav-a" >
                                         <p>Soins</p>
                                     </div>
                                 </a>
                             <?php 
-                                if($_GET["op"]){
-                                    //echo $_GET["op"];
-                                }
+
                             ?>
                             </div>
 
-                            <div class="form-onglet">
-                            <form>
-  <div class="form-row">
-    <div class="col-md-4 mb-3">
-      <label for="validationServer01">First name</label>
-      <input type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" value="Mark" required>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationServer02">Last name</label>
-      <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Last name" value="Otto" required>
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="validationServerUsername">Username</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupPrepend3">@</span>
-        </div>
-        <input type="text" class="form-control is-invalid" id="validationServerUsername" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
-        <div class="invalid-feedback">
-          Please choose a username.
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="col-md-6 mb-3">
-      <label for="validationServer03">City</label>
-      <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="City" required>
-      <div class="invalid-feedback">
-        Please provide a valid city.
-      </div>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationServer04">State</label>
-      <input type="text" class="form-control is-invalid" id="validationServer04" placeholder="State" required>
-      <div class="invalid-feedback">
-        Please provide a valid state.
-      </div>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationServer05">Zip</label>
-      <input type="text" class="form-control is-invalid" id="validationServer05" placeholder="Zip" required>
-      <div class="invalid-feedback">
-        Please provide a valid zip.
-      </div>
-    </div>
-  </div>
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
-      <label class="form-check-label" for="invalidCheck3">
-        Agree to terms and conditions
-      </label>
-      <div class="invalid-feedback">
-        You must agree before submitting.
-      </div>
-    </div>
-  </div>
-  <button class="btn btn-primary" type="submit">Submit form</button>
-</form>
+                            <div class="container-fluid form-onglet">
+                                <?php
+                                    if($_SESSION["view"] === "animaux"){
+                                        include("includes/view-animaux.php");
+                                    }
+
+                                ?>
                             </div>
                         </div>
                 </div>

@@ -1,5 +1,6 @@
 <?php
 require_once("../classes/__init__.php");
+session_start();
 ?>
 
 
@@ -21,6 +22,8 @@ require_once("../classes/__init__.php");
 
     <?php
     require_once("../includes/header.php");
+    $user = $_SESSION["user"];
+    $refuges = $user->get_fonctions_par_refuges();
     ?>
     <div class="main">
         <!-- infos -->
@@ -31,16 +34,21 @@ require_once("../classes/__init__.php");
                     <p class="" id="title"> Mes refuges </p>
                     <br>
                     <div id="liste-refuge" >
-                        <a href="">
-                            <div class="refuge-card">
-                                <p>Nom refuge</p>
-                            </div>
-                        </a>
-                        <a href="">
-                            <div class="refuge-card">
-                                <p>Nom refuge</p>
-                            </div>
-                        </a>
+                        <?php
+                            // boucle sur les refuges ou l'utilisateur à une fonction
+                            foreach($refuges as $r){
+                                echo '
+                                    <a href="fiche-refuge.php?idref='. $r["r_id"].'">
+                                        <div class="refuge-card">
+                                            <p>'.$r["r_nom"].'</p>
+                                        </div>
+                                    </a>
+                                
+                                ';
+                            }
+                        ?>
+
+
 
                     </div>
 
