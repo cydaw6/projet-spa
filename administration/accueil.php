@@ -1,8 +1,5 @@
 <?php
-
 require_once("../classes/__init__.php");
-
-
 ?>
 
 

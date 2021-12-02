@@ -1,3 +1,5 @@
+
+
 .section-login{
     color: white;
     font-weight: bold;
@@ -55,6 +57,62 @@
     transition: 200ms cubic-bezier(.17,.84,.44,1);
 }
 
+/*          FICHE            */
+
+.section-fiche{
+    color: white;
+    font-weight: bold;
+    padding: 4em;
+    background-color: var(--main-dark-green) ;
+    
+}
+
+.fiche-container{
+    padding: 4em;
+    text-align: left;
+}
+
+.form-onglet{
+    background-color: var(--main-beige);
+}
+
+#nav-onglet{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-bottom: -1em;
+}
+.nav-a{
+    
+    padding: 1em 0.5em 0.5em 0.5em;
+    background-color: white;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    margin-bottom: 1em;
+    transition: 200ms ease-in-out;
+    color: black;
+
+    -webkit-box-shadow: inset 25px 1px 21px -11px rgba(0,0,0,0.03); 
+    box-shadow: inset 25px 1px 21px -11px rgba(0,0,0,0.03);
+    
+
+}
+
+.nav-a:hover{
+    transform: translateY(-0.4em);
+    transition: 200ms cubic-bezier(.17,.84,.44,1);
+    background-color: var(--main-beige);
+}
+
+.onglet{
+    color: black;
+    background-color: var(--main-beige);
+}
+
+
+a {
+    text-decoration: none;
+}
 
 /****************************
 

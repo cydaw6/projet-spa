@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,10 +14,9 @@
   <body>
 
       <?php
-      require_once("./classes/__init__.php");
-      require("./includes/header.php");
-      $res = $db->query("SELECT COUNT(*) nbr FROM animal;");
-
+        require_once("./classes/__init__.php");
+        require("./includes/header.php");
+        $res = $db->query("SELECT COUNT(*) nbr FROM animal;");
       ?>
 
       <div class="main">
