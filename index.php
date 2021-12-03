@@ -17,6 +17,8 @@
         require_once("./classes/__init__.php");
         require("./includes/header.php");
         $res = $db->query("SELECT COUNT(*) nbr FROM animal;");
+        // basename(dirname(__FILE__));
+        // echo $GLOBALS["p_root"];
       ?>
 
       <div class="main">

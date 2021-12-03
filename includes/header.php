@@ -1,4 +1,7 @@
 
+<?php
+
+?>
 <html lang="fr">
 
 <body>
@@ -15,11 +18,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item brd-left brd-right">
-                            <a class="nav-link active" aria-current="page" href="/">Accueil</a>
+                            <a class="nav-link active" aria-current="page" <?php echo 'href="'.''.'/"'; ?>>Accueil</a>
                         </li>
                         <li class="nav-item brd-left brd-right">
 
-                            <a class="nav-link" aria-current="page" <?php echo 'href="/administration/login.php"'; ?> >Connexion</a>
+                            <a class="nav-link" aria-current="page" <?php echo 'href="./'.''.'/../administration/login.php"'; ?> >Connexion</a>
                         </li>
                         <li class="nav-item brd-right">
                             <a class="nav-link" href="#">Refuges</a>

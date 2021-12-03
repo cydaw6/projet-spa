@@ -19,7 +19,8 @@ Ajouter un animal
     <?php
     $animaux_by_last_refuge = Animal::get_animals_from_refuge_id($refuge->data["r_id"]);
     while($row = $animaux_by_last_refuge->fetch()){
-        echo '<div class="row-data"><p>'.$row["a_nom"].' '.$row["e_id"].'('.$row["a_sexe"].') </p></div>';
+        echo '<div class="row-data"><p>'.$row["a_nom"].'</p></div>';
+        // '.$row["e_id"].'('.$row["a_sexe"].')
     }
 
     ?>
