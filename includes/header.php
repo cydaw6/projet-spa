@@ -1,6 +1,6 @@
 
 <?php
-
+    require_once(__DIR__.'/path.php');
 ?>
 <html lang="fr">
 
@@ -18,14 +18,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item brd-left brd-right">
-                            <a class="nav-link active" aria-current="page" <?php echo 'href="'.''.'/"'; ?>>Accueil</a>
+                            <a class="nav-link active" aria-current="page" <?php echo 'href="'.ROOT.'"'; ?>>Accueil</a>
                         </li>
                         <li class="nav-item brd-left brd-right">
 
-                            <a class="nav-link" aria-current="page" <?php echo 'href="./'.''.'/../administration/login.php"'; ?> >Connexion</a>
+                            <a class="nav-link" aria-current="page" <?php echo 'href="'.ROOT.'administration/login.php"'; ?> >Connexion</a>
                         </li>
                         <li class="nav-item brd-right">
-                            <a class="nav-link" href="#">Refuges</a>
+                            <a class="nav-link"  <?php echo 'href="'.ROOT.'administration/accueil.php"'; ?>>Refuges</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
