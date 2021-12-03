@@ -25,7 +25,7 @@ font-family: 'Shadows Into Light', cursive;
     --main-beige: #fdf3ed;
     --main-pastel-blue: rgb(110, 138, 153);
     --main-pastel-light-brown: #928161;
-    --main-dark-green: #133836;
+    --main-dark-green: #1a8685;
 }
 
 /*
@@ -155,7 +155,6 @@ body{
 .orange{
     color: var(--main-orange);
 }
-
 
 .footer-flex ul{
     overflow: hidden;

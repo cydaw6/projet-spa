@@ -1,19 +1,22 @@
 
 <?php
-    require_once(__DIR__.'/path.php');
+// $path =  '/'.basename(dirname(__FILE__));
+// $path = dirname($_SERVER["PHP_SELF"]);
+//define("ROOT","/~***REMOVED***.***REMOVED***/");
+const ROOT = "/";
+//echo ROOT;
 ?>
-<html lang="fr">
-
-<body>
 
 <div class="logo-nav">
     <div class="container">
 
         <nav class="navbar navbar-expand-lg navbar-light " style="padding: 0;">
             <div class="container-fluid" >
-                <img src="https://upload.wikimedia.org/wikipedia/fr/archive/0/00/20161112112229%21Logo_de_la_SPA_%28France%29.png" alt="logo spa" style="max-height: 8em; width: auto;">
+                <a href="/">
+                    <img src="https://upload.wikimedia.org/wikipedia/fr/archive/0/00/20161112112229%21Logo_de_la_SPA_%28France%29.png" alt="logo spa" style="max-height: 8em; width: auto;">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -40,7 +43,12 @@
                         </li>
                     </ul>
                 </div>
-                <!--<p>Nom Prénom</p>-->
+                <?php
+                    if(isset($_SESSION["user"])){
+                        echo '<p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<a href=""><i class="fas fa-user"></i></a></p>';
+                    }
+
+                ?>
             </div>
         </nav>
     </div>
@@ -48,5 +56,3 @@
 <!--
 <img src="https://upload.wikimedia.org/wikipedia/fr/archive/0/00/20161112112229%21Logo_de_la_SPA_%28France%29.png" alt="logo spa">
 -->
-</body>
-</html>

@@ -31,3 +31,22 @@ function sanitize($data) {
     //$data = htmlspecialchars($data);
     return $data;
 }
+
+function checktobool($val){
+    if($val == "on"){
+        return true;
+    }
+    return false;
+}
+
+function accorder_resultat($val): string
+{
+    return ' <p>'. $val . ' résultat'. ( $val > 1 ? 's': '') . '</p>';
+}
+
+/*$params = array_filter($_GET, function($v, $k) {
+    return $k != "page";
+}, ARRAY_FILTER_USE_BOTH);
+$parametres = http_build_query($params) . "&page=".($_GET["page"]+1);*/
+
+//echo basename($_SERVER['REQUEST_URI']);

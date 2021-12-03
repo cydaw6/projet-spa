@@ -34,7 +34,7 @@ if (isset($_POST["send"])) {
 <body>
 
 <?php
-require_once("../includes/header.php");
+require_once("../global-includes/header.php");
 ?>
 <div class="main">
     <!-- infos -->
@@ -72,7 +72,7 @@ require_once("../includes/header.php");
 </div>
 
 <?php
-require("../includes/footer.html");
+require("../global-includes/footer.html");
 ?>
 
 <!-- Popper and Bootstrap JS -->

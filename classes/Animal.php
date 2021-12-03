@@ -9,50 +9,37 @@ class Animal{
         return $animal;
     }
 
-    public static function get_animals_from_refuge_id($idref){
+    public static function get_animals($idref, $nom, $espece, $limit, $offset, $deces = false, $adopte = false){
+
+
+
+        $q = " ";
+        $q .= ($deces) ? "a.a_date_deces IS NOT NULL": "a.a_date_deces IS NULL";
+        $q .= ($deces && $adopte) ? " OR ": " AND ";
+        $q .= ($adopte) ? "a.a_date_adoption IS NOT NULL": "a.a_date_adoption IS NULL";
+        $q_espece = ($espece === "all") ? " ": "AND e.e_id = ".$espece;
+
+        // vue contenant tous les animaux et le dernier refuge associé
         $res = DB::$db->prepare("
-        WITH transferts as (      
-                select          
-                t_id         
-                , a_id         
-                , a_nom        
-                 , r_id_dest r_id         
-                 , t_date date_inscription         
-                 FROM animal a         
-                 NATURAL JOIN transfert t         
-                 WHERE a_date_adoption IS NULL AND a_date_deces IS NULL         
-                 ORDER BY date_inscription DESC, t DESC 
-                 
-            ), dernier_refuge as (          
-                SELECT         
-                    h.a_id         
-                    , a_nom         
-                    , h.r_id         
-                    , h.date_inscription         
-                    FROM transferts h         
-                    WHERE h.t_id = (SELECT 
-                                        t_id                          
-                                        FROM transferts h1                          
-                                        WHERE h1.a_id = h.a_id                          
-                                        LIMIT 1
-                                    )     
-                UNION     
-                SELECT         
-                    a_id         
-                    , a_nom         
-                    , r_id         
-                    , a_date_inscription date_inscription         
-                    FROM animal         
-                    WHERE a_date_adoption IS NULL AND a_date_deces IS NULL         
-                    AND a_id NOT IN (SELECT DISTINCT a_id FROM transfert)         
-                    ORDER BY a_id , date_inscription DESC 
-            ) 
-            
-            SELECT dernier_refuge.* , r_nom FROM dernier_refuge NATURAL JOIN refuge WHERE r_id = ? ORDER BY a_id
-        
-        ");
-        $res->execute(array($idref));
-        return $res;
+                                SELECT a.*, e.*
+                                FROM dernier_refuge dr 
+                                JOIN ANIMAL a ON dr.a_id = a.a_id
+                                JOIN espece e ON a.e_id = e.e_id
+                                WHERE dr.r_id = ? 
+                                AND a.a_nom LIKE '%' || ? || '%'
+                                ".$q_espece."
+                                AND (".$q.")
+                                ORDER BY a.a_nom, e.e_nom
+                                LIMIT ? OFFSET ?
+                                ");
+
+        $res->execute(array($idref, $nom, $limit, $offset));
+        //echo $res->debugDumpParams();
+        return $res->fetchAll();
+    }
+
+    public static function get_especes(){
+       return DB::$db->query("SELECT * FROM espece")->fetchAll();
     }
 
 

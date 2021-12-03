@@ -66,9 +66,6 @@ a {
     text-align: left;
 }
 
-.form-onglet{
-    background-color: var(--main-beige);
-}
 
 #nav-onglet{
     display: flex;
@@ -88,21 +85,25 @@ a {
 
     -webkit-box-shadow: inset 25px 1px 21px -11px rgba(0,0,0,0.03); 
     box-shadow: inset 25px 1px 21px -11px rgba(0,0,0,0.03);
-    
+}
 
+.nav-a-select{
+    background-color: #22b6b5;
+    /* 22b6b5 */
+    color: white;
 }
 
 .nav-a:hover{
     transform: translateY(-0.4em);
     transition: 200ms cubic-bezier(.17,.84,.44,1);
-    background-color: var(--main-beige);
 }
 
 /*  Vue onglet */
 .form-onglet{
-    padding: 1em;
+    padding: 1em 1em 2em;
     color: black;
-    background-color: var(--main-beige);
+    background-color: var(--main-dark-green);
+    /*  133836 */
 }
 #form-recherche{
     color: white;
@@ -112,12 +113,34 @@ a {
     padding: 0.5em;
 }
 
-
 .row-data{
-    border: 1px black solid;
+    background-color: #f1f1f1;
+    border: 1px transparent solid;
+    border-radius: 4px;
     margin-bottom: 1em;
+    padding: 1em 0 0 1em;
 }
 
+.row-data-a{
+    color: black;
+}
+.row-data:hover{
+    background-color: #22b6b5;
+    color: white;
+}
+
+/*.row-data-a:hover{
+    background-color: ;
+}*/
+
+.classic-submit{
+    color: black;
+    background-color: white;
+}
+
+.page-btn i{
+    color: white!important;
+}
 
 @media screen and (max-width: 600px) {
     #form-login{

@@ -29,14 +29,14 @@ if(!isset($_GET["page"])){
             <select name="espece" id="espece" class="form-control">
                 <option value="all" selected>Toutes</option>
                 <?php
-                    foreach(Animal::get_especes() as  $row){
-                        echo '<option value="'.$row["e_id"].'">'.$row["e_nom"].'</option>';
-                    }
+                foreach(Animal::get_especes() as  $row){
+                    echo '<option value="'.$row["e_id"].'">'.$row["e_nom"].'</option>';
+                }
                 ?>
             </select>
             <!--<input type="text" class="form-control" placeholder="age"><br>-->
-<!--            <textarea name="description" placeholder="Description..."></textarea>
--->
+            <!--            <textarea name="description" placeholder="Description..."></textarea>
+            -->
         </div>
 
         <div class="col-12">
@@ -52,22 +52,11 @@ if(!isset($_GET["page"])){
     <?php
 
 
-    $animaux_by_last_refuge = Animal::get_animals(
-        $refuge->data["r_id"],
-        ($_GET["nom"] ?? ""),
-        ($_GET["espece"] ?? "all"),
-            $offset_page,
-        $offset_page * $_GET["page"],
-        (checktobool($_GET["deces"] ?? false)),
-        (checktobool($_GET["adopte"] ?? false))
-    );
+    $personnel = DB::$db->query("SELECT * FROM personnel")->fetchAll();
 
-    echo accorder_resultat(count($animaux_by_last_refuge));
-    foreach($animaux_by_last_refuge as $row){
-        echo '
-              <a href="#" class="row-data-a">
-                <div class="row-data" ><p>'.$row["a_nom"].' &nbsp;&nbsp;-&nbsp;&nbsp; '.$row["e_nom"].' ('.$row["a_sexe"].')</p></div>
-              </a>';
+    echo accorder_resultat(count($personnel));
+    foreach($personnel as $row){
+        echo '<a href="#" class="row-data-a"><div class="row-data" ><p>'.$row["p_prenom"].' &nbsp; '.$row["p_nom"].' &nbsp;&nbsp;&nbsp; tel: '.$row["p_tel"].'</p></div></a>';
     }
 
     // Update du paramètre de pagination
@@ -84,7 +73,7 @@ if(!isset($_GET["page"])){
     <span class="page-btn">
         <?php
         if($_GET["page"] != 0){
-        echo '
+            echo '
              <a href="'.$base_url.$precedent.'">
                  <i class="fas fa-arrow-circle-left fa-2x" ></i>
              </a>   
@@ -95,16 +84,9 @@ if(!isset($_GET["page"])){
         ?>
     </span>
 
-    <?php
-
-    if(count($animaux_by_last_refuge) == $offset_page){
-    echo '<span class="page-btn">
-                    <a href="'.$base_url.$suivant.'" class="right">
-                        <i class="fas fa-arrow-circle-right fa-2x" ></i>
-                    </a>
-                  </span>';
-    }
-
-    ?>
-
+    <span class="page-btn">
+        <a href="<?php echo $base_url.$suivant; ?>" class="right">
+            <i class="fas fa-arrow-circle-right fa-2x" ></i>
+        </a>
+    </span>
 </div>
