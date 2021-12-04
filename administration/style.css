@@ -121,12 +121,28 @@ a {
     padding: 1em 0 0 1em;
 }
 
+
+.row-data   p{
+    font-weight: normal;
+}
+
+
 .row-data-a{
     color: black;
 }
 .row-data:hover{
     background-color: #22b6b5;
     color: white;
+}
+
+
+
+.a-order{
+    color: black;
+}
+
+.a-order:hover{
+    color: #22b6b5 !important;
 }
 
 /*.row-data-a:hover{

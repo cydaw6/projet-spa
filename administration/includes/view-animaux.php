@@ -10,7 +10,9 @@ if(!isset($_GET["page"])){
 }
 
 ?>
-
+<div class="row">
+    <span class="page-btn"><a href=""> <i class="fas fa-user-plus fa-lg right"></i></a></span>
+</div>
 <form method="get" >
     <div class="row">
         <div class="col">
@@ -48,26 +50,26 @@ if(!isset($_GET["page"])){
     </div>
 </form>
 
-<div class="data-scroller">
-    <?php
-
+<?php
 
     $animaux_by_last_refuge = Animal::get_animals(
         $refuge->data["r_id"],
         ($_GET["nom"] ?? ""),
         ($_GET["espece"] ?? "all"),
-            $offset_page,
+        $offset_page,
         $offset_page * $_GET["page"],
         (checktobool($_GET["deces"] ?? false)),
         (checktobool($_GET["adopte"] ?? false))
     );
 
-    echo accorder_resultat(count($animaux_by_last_refuge));
+    $row_count =  count($animaux_by_last_refuge);
     foreach($animaux_by_last_refuge as $row){
         echo '
-              <a href="#" class="row-data-a">
-                <div class="row-data" ><p>'.$row["a_nom"].' &nbsp;&nbsp;-&nbsp;&nbsp; '.$row["e_nom"].' ('.$row["a_sexe"].')</p></div>
-              </a>';
+                  <a href="#" class="row-data-a">
+                    <div class="row-data" >
+                        <p>'.$row["a_nom"].' &nbsp;&nbsp;-&nbsp;&nbsp; '.$row["e_nom"].' ('.$row["a_sexe"].')</p>
+                    </div>
+                  </a>';
     }
 
     // Update du paramètre de pagination
@@ -80,7 +82,10 @@ if(!isset($_GET["page"])){
     $precedent = http_build_query($get_cpy);
     $base_url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)."?";
     $get_cpy["page"]+=abs($get_cpy["page"]);
-    ?>
+?>
+
+<div class="data-scroller">
+
     <span class="page-btn">
         <?php
         if($_GET["page"] != 0){
@@ -97,7 +102,7 @@ if(!isset($_GET["page"])){
 
     <?php
 
-    if(count($animaux_by_last_refuge) == $offset_page){
+    if($row_count == $offset_page){
     echo '<span class="page-btn">
                     <a href="'.$base_url.$suivant.'" class="right">
                         <i class="fas fa-arrow-circle-right fa-2x" ></i>

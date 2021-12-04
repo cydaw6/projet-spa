@@ -52,18 +52,40 @@ class Personnel
         }
     }
 
-    public function get_fonctions_par_refuges(){
-        $res = DB::$db->prepare("
-                                SELECT * 
-                                FROM exerce e
-                                JOIN fonction f ON f.fc_id = e.fc_id
-                                JOIN refuge r ON r.r_id = e.r_id
-                                WHERE e.p_id = ?
-                             ");
+    public function get_refuges(){
+        $res = DB::$db->prepare("SELECT * FROM exerce e JOIN refuge r ON e.r_id = r.r_id WHERE e.p_id = ?");
         $res->execute(array($this->data["p_id"]));
         return $res->fetchAll();
     }
 
+    public static function get_personnel($idref, $nom_complet, $fonctions, $limit = MAX_LIMIT, $offset = 0){
+        $res = DB::$db->prepare("
+                                SELECT DISTINCT p.p_nom, p.p_prenom, p.p_tel
+                                FROM exerce e
+                                JOIN fonction f ON f.fc_id = e.fc_id
+                                JOIN refuge r ON r.r_id = e.r_id
+                                JOIN personnel p ON p.p_id = e.p_id
+                                WHERE e.r_id = ?
+                                AND p.p_nom || ' ' || p.p_prenom LIKE '%' || ? || '%'
+                                ".(count($fonctions) ? "AND e.fc_id IN (".implode(',', $fonctions).")" : "")."
+                                ORDER BY p.p_prenom, p.p_nom
+                                LIMIT ? OFFSET ?
+                             ");
+        $res->execute(array($idref, $nom_complet, $limit, $offset));
+        //echo $res->debugDumpParams();
+        return $res->fetchAll();
+    }
 
+    public static function get_fonctions(){
+        return DB::$db->query("SELECT * FROM fonction;")->fetchAll();
+    }
+
+    public function exerce_in_refuge($idref){
+
+        $params = array_filter($this->get_refuges(), function($v, $k) use ($idref) {
+            return ($v["r_id"] == $idref);
+        }, ARRAY_FILTER_USE_BOTH);
+        return (bool) $params;
+    }
 
 }

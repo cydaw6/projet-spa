@@ -3,10 +3,6 @@
 class Refuge{
 
     public $data;
-    public $animaux;
-    public $personnel;
-    public $transferts;
-    public $soins;
 
     public static $nom_table = "refuge";
 
@@ -19,7 +15,7 @@ class Refuge{
         return $refuge;
     }
 
-    public static function creer($data){
+    public static function creer($data, $identifiants){
         /**
          * Renvoie un personnel avec les données en paramètre
          */
@@ -29,6 +25,22 @@ class Refuge{
         return $personnel;
     }
 
-
+    public function get_transferts($limit = MAX_LIMIT, $offset = 0, $date_ord = "ASC", $refuge_ord = "ASC"){
+        $res = DB::$db->prepare("SELECT 
+                                    animal.*, 
+                                    r_nom, 
+                                    t_date 
+                                    FROM transfert 
+                                        NATURAL JOIN animal  
+                                        JOIN refuge r ON r.r_id = transfert.r_id_dest
+                                    WHERE r_id_orig = ?
+                                    ORDER BY t_date ".$date_ord.",
+                                             r.r_nom ".$refuge_ord.",
+                                             a_nom  
+                                    LIMIT ? OFFSET ?
+        ");
+        $res->execute(array($this->data["r_id"], $limit, $offset));
+        return $res->fetchAll();
+    }
 
 }

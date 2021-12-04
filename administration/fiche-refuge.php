@@ -19,7 +19,13 @@ if(isset($_GET["idref"])){
 
 // nombre d'entrées par requêtes
 $offset_page = 10;
-
+$curr_url = $_SERVER["REQUEST_URI"];
+$base_url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) . "?";
+// on vérifie que le personnel à bien accès à la fiche du refuge
+$user = $_SESSION["user"];
+if(!$user->exerce_in_refuge($refuge->data["r_id"])){
+    header("location: accueil.php");
+}
 ?>
     <!doctype html>
     <html lang="en">
@@ -30,6 +36,8 @@ $offset_page = 10;
 
         <!-- Bootstrap CSS -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
 
         <!-- Fontawesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -89,6 +97,9 @@ $offset_page = 10;
                                     }elseif ($_SESSION["view"] === "personnel"){
                                         include("includes/view-personnel.php");
 
+                                    }elseif ($_SESSION["view"] === "transferts"){
+                                        include("includes/view-transfert.php");
+
                                     }
 
                                 ?>
@@ -100,16 +111,30 @@ $offset_page = 10;
 
         </div>
 
-
-
     <?php
     require("../global-includes/footer.html");
     ?>
+
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!-- Popper and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
+    <!-- Bootstrap multiselect Beta -->
+    <script src="../assets/lib/bootstrap-select.js"></script>
+
+    <!-- Option du multiselect -->
+    <script>
+        $.fn.selectpicker.Constructor.DEFAULTS.selectedTextFormat = 'count';
+        $.fn.selectpicker.Constructor.DEFAULTS.noneSelectedText = " fonctions";
+
+    </script>
+
+
+
+
+
     </body>
-    </html>
-<?php
+</html>

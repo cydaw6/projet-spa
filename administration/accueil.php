@@ -26,7 +26,7 @@ session_start();
     <?php
     require_once("../global-includes/header.php");
     $user = $_SESSION["user"];
-    $refuges = $user->get_fonctions_par_refuges();
+    $refuges = $user->get_refuges();
     ?>
     <div class="main">
         <!-- infos -->

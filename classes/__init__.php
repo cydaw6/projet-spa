@@ -9,3 +9,5 @@ require_once (dirname(__FILE__)."/fonctions.php" );
 // Initialisation de la variable db
 $DB = DB::getInstance();
 $db = DB::$db;
+//
+const MAX_LIMIT = 10000;

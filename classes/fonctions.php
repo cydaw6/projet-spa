@@ -39,10 +39,12 @@ function checktobool($val){
     return false;
 }
 
-function accorder_resultat($val): string
-{
-    return ' <p>'. $val . ' résultat'. ( $val > 1 ? 's': '') . '</p>';
+function reverse_ord($ord){
+    return $ord === "ASC" ? "DESC": "ASC";
 }
+
+
+
 
 /*$params = array_filter($_GET, function($v, $k) {
     return $k != "page";
