@@ -28,6 +28,12 @@ class Personnel
         return false;
     }
 
+    public static function get_personnel_by_id($idp){
+        $res = DB::$db->prepare("SELECT * FROM personnel WHERE p_id = ?");
+        $res->execute(array($idp));
+        return $res->fetch();
+    }
+
     public static function creer($data, $identifiants){
         /**
          * Renvoie un personnel avec les données en paramètre

@@ -1,19 +1,9 @@
 <?php
-if(!isset($refuge)){
-    echo "erreur";
-}
 $view_name = "personnel";
 
-// nécessaire pour la pagination
-if(!isset($_GET["page"])){
-    $_GET["page"] = 0;
-}
-
-
+include_once("search-add.php");
 ?>
-<div class="row">
-    <span class="page-btn"><a href=""> <i class="fas fa-user-plus fa-lg right"></i></a></span>
-</div>
+
 <form method="get" >
 
     <div class="row">
@@ -45,9 +35,9 @@ if(!isset($_GET["page"])){
         </div>
     </div>
 </form>
-
+<br>
 <?php
-    $personnel = Personnel::get_personnel(
+$data_query = Personnel::get_personnel(
             $refuge->data["r_id"],
         ($_GET["nom"] ?? ""),
         ($_GET["fc"] ?? array()),
@@ -55,8 +45,10 @@ if(!isset($_GET["page"])){
         $offset_page * $_GET["page"]
     );
 
-    $row_count =  count($personnel);
-
+    $row_count =  count($data_query);
+if($_GET["page"] != 0){
+    echo '<p style="color: white;">Page '.$_GET["page"].'</p>';
+}
     echo '
         <div class=" row" >
             <div class="col">
@@ -68,7 +60,7 @@ if(!isset($_GET["page"])){
         </div>
     ';
 
-    foreach ($personnel as $row) {
+    foreach ($data_query as $row) {
         echo '<a href="#" class="row-data-a">
                 <div class="row-data row" >
                     <div class="col">
@@ -80,45 +72,3 @@ if(!isset($_GET["page"])){
                 </div>
              </a>';
     }
-
-    // Update du paramètre de pagination
-    // et construction du nouvel l'URL
-    $get_cpy = $_GET;
-    $get_cpy["page"] += 1;
-    $suivant = http_build_query($get_cpy);
-    $get_cpy["page"] -= 1;
-    $get_cpy["page"] -= ($get_cpy["page"] === 0 ? 0 : 1);
-    $precedent = http_build_query($get_cpy);
-    $base_url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) . "?";
-    $get_cpy["page"] += abs($get_cpy["page"]);
-?>
-
-<div class="data-scroller">
-
-    <span class="page-btn">
-        <?php
-        if($_GET["page"] != 0){
-            echo '
-             <a href="'.$base_url.$precedent.'">
-                 <i class="fas fa-arrow-circle-left fa-2x" ></i>
-             </a>   
-            ';
-        }else{
-            echo '<a>&nbsp</a>';
-        }
-        ?>
-    </span>
-
-    <?php
-
-    if($row_count == $offset_page){
-        echo '<span class="page-btn">
-                    <a href="'.$base_url.$suivant.'" class="right">
-                        <i class="fas fa-arrow-circle-right fa-2x" ></i>
-                    </a>
-                  </span>';
-    }
-
-    ?>
-
-</div>

@@ -1,33 +1,75 @@
 <?php
-if(!isset($refuge)){
-    echo "erreur";
-}
+$view_name = "soins";
+
+
+include_once("search-add.php");
 ?>
-    Ajouter un animal
-    <form>
-        <div class="row">
-            <div class="col">
-                <input type="text" class="form-control" placeholder="Nom"><br>
-                <input type="date" class="form-control">
-            </div>
-            <div class="col">
-                <input type="text" class="form-control" placeholder="age"><br>
-                <textarea name="description" placeholder="Description..."></textarea>
 
-            </div>
 
-        </div>
-    </form>
 
-    <div class="data-scroller">
 <?php
-$animaux_by_last_refuge = Animal::get_animals_from_refuge_id($refuge->data["r_id"]);
-foreach($animaux_by_last_refuge as $row){
-    echo '<div class="row-data"><p>'.$row["a_nom"].' &nbsp;&nbsp;-&nbsp;&nbsp; '.$row["e_nom"].' ('.$row["a_sexe"].')</p></div>';
-    // '.$row["e_id"].'('.$row["a_sexe"].')
-}
+
+    if($_GET["act"] == "add"){
+        include("add-forms/add-soins.php");
+    }else{
+        include("search-forms/search-soins.php");
+    }
+
 
 ?>
 
-    <span class="left"><a href="">< Précédent</a> </span><span class="right"><a href="">Suivant ></a></span>
-    </div><?php
+<br>
+
+<?php
+
+$data_query = $refuge->get_soins(
+    ($_GET["nom"] ?? ""),
+    ($_GET["ts"] ?? array()),
+    $offset_page,
+    $offset_page * $_GET["page"],
+    ($_GET["dateOrd"] ?? "DESC")
+);
+
+$row_count =  count($data_query);
+
+// construction des liens de tri
+$cpy_get = $_GET;
+$cpy_get["dateOrd"] = reverse_ord($_GET["dateOrd"] ?? "DESC");
+$dateOrd = http_build_query($cpy_get);
+
+$cpy_get = $_GET;
+$cpy_get["refOrd"] = reverse_ord($_GET["refOrd"] ?? "DESC");
+$refOrd = http_build_query($cpy_get);
+
+if($_GET["page"] != 0){
+    echo '<p style="color: white;">Page '.$_GET["page"].'</p>';
+}
+echo '
+        <div class=" row" >
+            <div class="col">
+                <p class="">Nom</p>
+            </div>
+            <div class="col text-lg-center">
+                <a href="'. $base_url . $dateOrd.'" class="a-order"><p > Date du transfert <i class="fas fa-sort"></i></p></a>
+            </div>
+            <div class="col text-lg-end">
+                 <p class=""> Type de soin</p>
+            </div>
+        </div>
+    ';
+
+foreach ($data_query as $row) {
+    echo '<a href="#" class="row-data-a">
+                <div class="row-data row" >
+                    <div class="col">
+                        <p class="">' . $row["a_nom"].'</p>
+                    </div>
+                    <div class="col text-lg-center">
+                        <p class="">' . $row["s_date"] . '</p>
+                    </div>
+                    <div class="col text-lg-end">
+                        <p class="">' . $row["ts_libelle"] . '</p>
+                    </div>
+                </div>
+             </a>';
+}

@@ -17,10 +17,24 @@ if(isset($_GET["idref"])){
     $refuge = Refuge::get_refuge_data_by_id($_GET["idref"]);
 }
 
+if(!isset($refuge)){
+    echo "erreur";
+}
+
+// nécessaire pour la pagination
+if(!isset($_GET["page"])){
+    $_GET["page"] = 0;
+}
+
+if(!isset($_GET["act"])){
+    $_GET["act"] = "search";
+}
+
 // nombre d'entrées par requêtes
 $offset_page = 10;
 $curr_url = $_SERVER["REQUEST_URI"];
 $base_url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) . "?";
+
 // on vérifie que le personnel à bien accès à la fiche du refuge
 $user = $_SESSION["user"];
 if(!$user->exerce_in_refuge($refuge->data["r_id"])){
@@ -63,6 +77,11 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                         <div class="fiche-container">
                             <br>
                             <div id="nav-onglet" >
+                                <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=infos">
+                                    <div class="nav-a <?php echo ($_SESSION["view"] === "infos") ? "nav-a-select" : ""; ?>" >
+                                        <p>Le refuge</p>
+                                    </div>
+                                </a>
                                 <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=animaux" >
                                     <div class="nav-a <?php echo ($_SESSION["view"] === "animaux") ? "nav-a-select" : " "; ?>" >
                                         <p>Animaux</p>
@@ -83,6 +102,7 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                         <p>Soins</p>
                                     </div>
                                 </a>
+
                             <?php 
 
                             ?>
@@ -100,8 +120,17 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                     }elseif ($_SESSION["view"] === "transferts"){
                                         include("includes/view-transfert.php");
 
+                                    }elseif ($_SESSION["view"] === "soins"){
+                                        include("includes/view-soins.php");
+
+                                    }elseif ($_SESSION["view"] === "infos"){
+                                        include("includes/view-infos.php");
+
                                     }
 
+                                    if($_SESSION["view"] != "infos"){
+                                        include("includes/pagination.php");
+                                    }
                                 ?>
                             </div>
                         </div>

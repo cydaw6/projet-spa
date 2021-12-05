@@ -45,7 +45,7 @@ const ROOT = "/";
                 </div>
                 <?php
                     if(isset($_SESSION["user"])){
-                        echo '<p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<a href=""><i class="fas fa-user"></i></a></p>';
+                        echo '<a href=""><p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<i class="fas fa-user"></i></p></a>';
                     }
 
                 ?>

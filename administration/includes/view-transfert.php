@@ -1,21 +1,10 @@
 <?php
-if(!isset($refuge)){
-    echo "erreur";
-}
-$view_name = "personnel";
-
-// nécessaire pour la pagination
-if(!isset($_GET["page"])){
-    $_GET["page"] = 0;
-}
-
-
+$view_name = "transfert";
 ?>
 
-<div class="row">
-    <span class="page-btn"><a href=""> <i class="fas fa-user-plus fa-lg right"></i></a></span>
-</div>
-Réaliser un transfert
+
+<p style="color: white;">Effectuer un transfert</p>
+
 <form method="get" >
 
     <div class="row">
@@ -43,21 +32,21 @@ Réaliser un transfert
             <input type="hidden" name="idref" value="<?php echo $_GET["idref"]; ?>">
             <input type="hidden" name="view" value="<?php echo $view_name; ?>">
             <input type="hidden" name="page" value="0">
-            <button type="submit" class="btn btn-primary right classic-submit ">Rechercher</button>
+            <button type="submit" class="btn btn-primary right classic-submit ">Transférer</button>
         </div>
     </div>
 </form>
 <br>
 
 <?php
-$transferts = $refuge->get_transferts(
+$data_query = $refuge->get_transferts(
         $offset_page,
     $offset_page * $_GET["page"],
     ($_GET["dateOrd"] ?? "ASC"),
     ($_GET["refOrd"] ?? "ASC")
 );
 
-$row_count =  count($transferts);
+$row_count =  count($data_query);
 
 // construction des liens de tri
 $cpy_get = $_GET;
@@ -68,26 +57,35 @@ $cpy_get = $_GET;
 $cpy_get["refOrd"] = reverse_ord($_GET["refOrd"] ?? "DESC");
 $refOrd = http_build_query($cpy_get);
 
-
+if($_GET["page"] != 0){
+    echo '<p style="color: white;">Page '.$_GET["page"].'</p>';
+}
 echo '
+         
         <div class=" row" >
             <div class="col">
                 <p class="">Nom</p>
             </div>
+            <div class="col">
+                <p class="">Espèce</p>
+            </div>
             <div class="col text-lg-center">
-                <a href="'. $base_url . $dateOrd.'" class="a-order"><p > Date du transfert <i class="fas fa-sort"></i></p></a>
+                <a href="'.$base_url.$dateOrd.'" class="a-order"><p > Date du transfert <i class="fas fa-sort"></i></p></a>
             </div>
             <div class="col text-lg-end">
-                 <a href="'.$base_url.$refOrd.'" class="a-order"><p class=""> Destination <i class="fas fa-sort"></i> </p></a>
+                 <p class=""> Destination </p>
             </div>
         </div>
     ';
 
-foreach ($transferts as $row) {
-    echo '<a href="#" class="row-data-a">
+foreach ($data_query as $row) {
+    echo '<a class="row-data-a">
                 <div class="row-data row" >
                     <div class="col">
                         <p class="">' . $row["a_nom"].'</p>
+                    </div>
+                    <div class="col ">
+                        <p class="">' . $row["e_nom"] .'</p>
                     </div>
                     <div class="col text-lg-center">
                         <p class="">' . $row["t_date"] . '</p>
@@ -99,43 +97,3 @@ foreach ($transferts as $row) {
              </a>';
 }
 
-// Update du paramètre de pagination
-// et construction du nouvel l'URL
-$get_cpy = $_GET;
-$get_cpy["page"] += 1;
-$suivant = http_build_query($get_cpy);
-$get_cpy["page"] -= 1;
-$get_cpy["page"] -= ($get_cpy["page"] === 0 ? 0 : 1);
-$precedent = http_build_query($get_cpy);
-$get_cpy["page"] += abs($get_cpy["page"]);
-?>
-
-<div class="data-scroller">
-
-    <span class="page-btn">
-        <?php
-        if($_GET["page"] != 0){
-            echo '
-             <a href="'.$base_url.$precedent.'">
-                 <i class="fas fa-arrow-circle-left fa-2x" ></i>
-             </a>   
-            ';
-        }else{
-            echo '<a>&nbsp</a>';
-        }
-        ?>
-    </span>
-
-    <?php
-
-    if($row_count == $offset_page){
-        echo '<span class="page-btn">
-                    <a href="'.$base_url.$suivant.'" class="right">
-                        <i class="fas fa-arrow-circle-right fa-2x" ></i>
-                    </a>
-                  </span>';
-    }
-
-    ?>
-
-</div>

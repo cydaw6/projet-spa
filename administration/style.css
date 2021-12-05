@@ -119,11 +119,18 @@ a {
     border-radius: 4px;
     margin-bottom: 1em;
     padding: 1em 0 0 1em;
+    box-shadow: 0px 13px 15px -3px rgba(0,0,0,0.28);
+}
+
+.row, .row a {
+    color: white!important;
+    font-weight: normal;
 }
 
 
 .row-data   p{
     font-weight: normal;
+    color: black;
 }
 
 
@@ -158,6 +165,10 @@ a {
     color: white!important;
 }
 
+span {
+    color: black!important;
+}
+
 @media screen and (max-width: 600px) {
     #form-login{
         max-width: 90%;
@@ -167,6 +178,11 @@ a {
         padding: 0!important;
 
     }
+}
+
+.add:hover > i{
+    color: var(--main-orange) !important;
+
 }
 
 .right{
