@@ -47,10 +47,8 @@ class Refuge{
     }
 
     public static function get_type_soins(){
-        $res = DB::$db->query("SELECT * from type_soin");
-        $res->execute();
-        return $res->fetchAll();
-}
+        return DB::$db->query("SELECT * from type_soin")->fetchAll();
+    }
 
     public function get_soins($nom_animal, $type_s, $limit = MAX_LIMIT, $offset = 0, $date_ord = "ASC"){
 
