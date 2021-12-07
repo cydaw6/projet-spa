@@ -14,9 +14,9 @@ class Personnel
          * dans une variable session "user"
          */
         $_SESSION["user"]= null;
-        $res = DB::$db->prepare("SELECT * FROM personnel NATURAL JOIN identifiant WHERE login = ?");
-        $res->execute(array($login));
-        $personnel = $res->fetch();
+        $cnx = DB::$db->prepare("SELECT * FROM personnel NATURAL JOIN identifiant WHERE login = ?");
+        $cnx->execute(array($login));
+        $personnel = $cnx->fetch();
         if($personnel && password_verify($mdp, $personnel["mdp"])){
             $user = new Personnel();
             $user->data = array_slice($personnel, 0 , -2);
@@ -29,9 +29,9 @@ class Personnel
     }
 
     public static function get_personnel_by_id($idp){
-        $res = DB::$db->prepare("SELECT * FROM personnel WHERE p_id = ?");
-        $res->execute(array($idp));
-        return $res->fetch();
+        $cnx = DB::$db->prepare("SELECT * FROM personnel WHERE p_id = ?");
+        $cnx->execute(array($idp));
+        return $cnx->fetch();
     }
 
     public static function creer($data, $identifiants){
@@ -50,8 +50,8 @@ class Personnel
          * Entre conscient de ce que ça fait.
          * Cette fonction hash tous les mots de passe de la table identifiant
          */
-        $res = DB::$db->query("SELECT id, mdp FROM identifiant");
-        while($row = $res->fetch()){
+        $cnx = DB::$db->query("SELECT id, mdp FROM identifiant");
+        while($row = $cnx->fetch()){
             $hash = hashage($row["mdp"]);
             $query = DB::$db->prepare("UPDATE identifiant SET mdp = :mdp WHERE id = :id");
             $query->execute(array(':mdp' => $hash, ':id' => $row["id"]));
@@ -59,13 +59,13 @@ class Personnel
     }
 
     public function get_refuges(){
-        $res = DB::$db->prepare("SELECT * FROM exerce e JOIN refuge r ON e.r_id = r.r_id WHERE e.p_id = ?");
-        $res->execute(array($this->data["p_id"]));
-        return $res->fetchAll();
+        $cnx = DB::$db->prepare("SELECT DISTINCT * FROM exerce e JOIN refuge r ON e.r_id = r.r_id WHERE e.p_id = ?");
+        $cnx->execute(array($this->data["p_id"]));
+        return $cnx->fetchAll();
     }
 
     public static function get_personnel($idref, $nom_complet, $fonctions, $limit = MAX_LIMIT, $offset = 0){
-        $res = DB::$db->prepare("
+        $cnx = DB::$db->prepare("
                                 SELECT DISTINCT p.p_nom, p.p_prenom, p.p_tel
                                 FROM exerce e
                                 JOIN fonction f ON f.fc_id = e.fc_id
@@ -77,9 +77,9 @@ class Personnel
                                 ORDER BY p.p_prenom, p.p_nom
                                 LIMIT ? OFFSET ?
                              ");
-        $res->execute(array($idref, $nom_complet, $limit, $offset));
-        //echo $res->debugDumpParams();
-        return $res->fetchAll();
+        $cnx->execute(array($idref, $nom_complet, $limit, $offset));
+        //echo $cnx->debugDumpParams();
+        return $cnx->fetchAll();
     }
 
     public static function get_fonctions(){
@@ -96,33 +96,36 @@ class Personnel
     }
 
     public static function verif_exist_personnel($nom, $prenom, $num_secu, $tel){
-        $res = DB::$db->prepare("
+        $cnx = DB::$db->prepare("
                                 SELECT
                                 p_id
                                 FROM personnel
                                 WHERE (p_tel = ? AND p_nom = ? AND p_prenom = ?)
                                 OR p_num_secu = ?
         ");
-        $res->execute(array($tel, $nom, $prenom, $num_secu));
-        return $res->fetchAll();
+        $cnx->execute(array($tel, $nom, $prenom, $num_secu));
+        return $cnx->fetchAll();
     }
 
     public static function add_personnel($nom, $prenom, $num_secu, $tel, $adresse, $localite, $codep, $login){
-        $res = DB::$db->prepare("INSERT INTO personnel
+        $cnx = DB::$db->prepare("INSERT INTO personnel
             VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING p_id
         ");
-        $res->execute(array($nom, $prenom, $adresse, $localite, $codep, $num_secu, $tel, $login));
-        return $res->fetch()["p_id"];
+        $cnx->execute(array($nom, $prenom, $adresse, $localite, $codep, $num_secu, $tel, $login));
+        return $cnx->fetch()["p_id"];
     }
 
     public static function create_logins($nom, $prenom){
         $login = substr($prenom, 0, 3);
         $login .= substr($nom, 0, 1);
         $login .= rand(0, 9).rand(0, 9).rand(0, 9);
-        $mdp = hashage(generateRandomString());
-        $res = DB::$db->prepare("INSERT INTO identifiant VALUES(DEFAULT, ?, ?) RETURNING id");
-        $res->execute(array($login, $mdp));
-        return $res->fetch()["id"];
+        $mdp = generateRandomString();
+        $mdp_hash = hashage($mdp);
+        $cnx = DB::$db->prepare("INSERT INTO identifiant VALUES(DEFAULT, ?, ?) RETURNING id, login, mdp");
+        $cnx->execute(array($login, $mdp_hash));
+        $cnx = $cnx->fetch();
+        $cnx["mdp"] = $mdp;
+        return $cnx;
     }
 
 }

@@ -6,9 +6,9 @@ class Animal{
     public static function get_animal_by_id($idanim): Animal
     {
         $animal = new Animal();
-        $res = DB::$db->prepare("SELECT * FROM animal WHERE a_id = ?");
-        $res->execute(array($idanim));
-        $animal->data = $res->fetch();
+        $cnx = DB::$db->prepare("SELECT * FROM animal WHERE a_id = ?");
+        $cnx->execute(array($idanim));
+        $animal->data = $cnx->fetch();
         return $animal;
     }
 

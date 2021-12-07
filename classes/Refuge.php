@@ -9,9 +9,9 @@ class Refuge{
     public static function get_refuge_data_by_id($idref)
     {
         $refuge = new Refuge();
-        $res = DB::$db->prepare("SELECT * FROM refuge WHERE r_id = ?");
-        $res->execute(array($idref));
-        $refuge->data = $res->fetch();
+        $cnx = DB::$db->prepare("SELECT * FROM refuge WHERE r_id = ?");
+        $cnx->execute(array($idref));
+        $refuge->data = $cnx->fetch();
         return $refuge;
     }
 
@@ -26,7 +26,7 @@ class Refuge{
     }
 
     public function get_transferts($limit = MAX_LIMIT, $offset = 0, $date_ord = "ASC", $refuge_ord = "ASC"){
-        $res = DB::$db->prepare("SELECT 
+        $cnx = DB::$db->prepare("SELECT 
                                     animal.*,
                                     e.e_nom,
                                     r_nom, 
@@ -42,8 +42,8 @@ class Refuge{
                                              a_nom  
                                     LIMIT ? OFFSET ?
         ");
-        $res->execute(array($this->data["r_id"], $limit, $offset));
-        return $res->fetchAll();
+        $cnx->execute(array($this->data["r_id"], $limit, $offset));
+        return $cnx->fetchAll();
     }
 
     public static function get_type_soins(){
@@ -52,7 +52,7 @@ class Refuge{
 
     public function get_soins($nom_animal, $type_s, $limit = MAX_LIMIT, $offset = 0, $date_ord = "ASC"){
 
-        $res = DB::$db->prepare("
+        $cnx = DB::$db->prepare("
                                 WITH histo_transfert as (
                                     SELECT
                                     a_id
@@ -91,8 +91,8 @@ class Refuge{
                                     LIMIT ? OFFSET ?
             ");
 
-        $res->execute(array($this->data["r_id"], $nom_animal, $limit, $offset));
-        return $res->fetchAll();
+        $cnx->execute(array($this->data["r_id"], $nom_animal, $limit, $offset));
+        return $cnx->fetchAll();
     }
 
     public function get_animals($nom, $espece, $limit = MAX_LIMIT, $offset = 0, $deces = false, $adopte = false){
@@ -104,7 +104,7 @@ class Refuge{
         $q_espece = ($espece === "all") ? " ": "AND e.e_id = ".$espece;
 
         // vue contenant tous les animaux et le dernier refuge associé
-        $res = DB::$db->prepare("
+        $cnx = DB::$db->prepare("
                                 SELECT a.*, e.*
                                 FROM dernier_refuge dr 
                                 JOIN ANIMAL a ON dr.a_id = a.a_id
@@ -117,16 +117,16 @@ class Refuge{
                                 LIMIT ? OFFSET ?
                                 ");
 
-        $res->execute(array($this->data["r_id"], $nom, $limit, $offset));
-        //echo $res->debugDumpParams();
-        return $res->fetchAll();
+        $cnx->execute(array($this->data["r_id"], $nom, $limit, $offset));
+        //echo $cnx->debugDumpParams();
+        return $cnx->fetchAll();
     }
 
     public function add_soin($p_id, $a_id, $ts_id, $v_id, $comm){
-        $res = DB::$db->prepare("
+        $cnx = DB::$db->prepare("
             INSERT INTO soin VALUES(DEFAULT, DATE_TRUNC('second', NOW()), ?, ?, ?, ?, ?)
         ");
-        return $res->execute(array($comm, $p_id, $a_id, $v_id, $ts_id));
+        return $cnx->execute(array($comm, $p_id, $a_id, $v_id, $ts_id));
     }
 
     public static function get_all_personnel(){
@@ -134,14 +134,30 @@ class Refuge{
     }
 
     public function update_personnel_fonctions($p_id, $fc_ids){
-        $res = DB::$db->prepare("DELETE FROM exerce WHERE p_id = ? AND r_id = ?");
-        $res->execute(array($p_id, $this->data["r_id"]));
+        $cnx = DB::$db->prepare("DELETE FROM exerce WHERE p_id = ? AND r_id = ?");
+        $cnx->execute(array($p_id, $this->data["r_id"]));
         foreach($fc_ids as $v){
-            $res = DB::$db->prepare("INSERT INTO exerce VALUES(?, ?, ?)");
-            $res->execute(array($p_id, $v, $this->data["r_id"]));
+            $cnx = DB::$db->prepare("INSERT INTO exerce VALUES(?, ?, ?)");
+            $cnx->execute(array($p_id, $v, $this->data["r_id"]));
         }
 
     }
 
+    public static function check_capacité($r_id): int
+    {
+        $r =  Refuge::get_refuge_data_by_id($r_id);
+        $count = count(($r->get_animals("", "all")));
+        return $count < $r->data["r_capacite"];
+    }
+
+    public static function transferer($id_orig, $id_animal, $id_dest){
+        $cnx = DB::$db->prepare("INSERT INTO transfert VALUES(DEFAULT, NOW(), ?, ?, ?)");
+        return $cnx->execute(array($id_orig, $id_animal, $id_dest));
+    }
+
+    public static function get_all_refuge(){
+        $cnx = DB::$db->query("SELECT * FROM refuge ORDER BY r_nom");
+        return $cnx->fetchAll();
+    }
 
 }

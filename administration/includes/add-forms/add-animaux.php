@@ -3,28 +3,18 @@
 $err_msg = "";
 
 if(isset($_POST["add-send"])){
-    $p = Personnel::verif_exist_personnel($_POST["add-nom"], $_POST["add-prenom"], $_POST["add-secu"], $_POST["add-tel"]);
+
 
     if(count($p) != 0){
         $err_msg = "L'utilisateur fait déjà partie de la spa";
     }else{
-        $login = Personnel::create_logins($_POST["add-nom"], $_POST["add-prenom"]);
-        $personnel_id = Personnel::add_personnel(
-            sanitize($_POST["add-nom"]),
-            sanitize($_POST["add-prenom"]),
-            $_POST["add-secu"],
-            $_POST["add-tel"],
-            sanitize($_POST["add-adresse"]),
-            sanitize($_POST["add-localite"]),
-            $_POST["add-codep"],
-            $login["id"]
-        );
 
         if($personnel_id){
 
             $refuge->update_personnel_fonctions($personnel_id,  ($_POST["fc"] ?? array()));
 
-            echo '<div class=" row" >
+            echo '
+                    <div class=" row" >
                         <div class="col text-lg-center">
                                     <p > <span class="text-lg-center" style="color: lightgreen!important;">L\'utilisateur a été ajouté. <br> login: '.$login["login"].'<br> Mot de passe: '.$login["mdp"].'</span> </p>
                         </div>
@@ -48,7 +38,7 @@ if(isset($_POST["add-send"])){
 }
 
 ?>
-<!--https://regexlib.com/CheatSheet.aspx?AspxAutoDetectCookieSupport=1-->
+    <!--https://regexlib.com/CheatSheet.aspx?AspxAutoDetectCookieSupport=1-->
     <form method="post" >
         <div class="row">
             <div class="col">
@@ -58,16 +48,16 @@ if(isset($_POST["add-send"])){
                         <input type="text" class="form-control" name="add-nom" id="nom" placeholder="" required>
                     </div>
                     <div class="col">
-                        <label for="prenom">Prénom</label>
-                        <input type="text" class="form-control" name="add-prenom" id="prenom" placeholder="" required>
+                        <label for="prenom">Date de naissance</label>
+                        <input type="date" class="form-control" name="add-prenom" id="prenom" placeholder="" required>
 
                     </div>
                 </div>
 
 
                 <div class="col">
-                    <label for="nom">Adresse</label>
-                    <input type="text" class="form-control" name="add-adresse" id="adresse" placeholder="" required>
+                    <label for="nom">Description</label>
+                    <textarea  class="form-control" name="add-adresse" id="adresse" placeholder="" required></textarea>
 
                 </div>
             </div>
@@ -90,20 +80,20 @@ if(isset($_POST["add-send"])){
 
                 <div class="row">
 
-                        <div class="col">
-                            <label for="nom">Code postal</label>
-                            <input type="text" class="form-control" name="add-codep" id="codepostal" placeholder="" required pattern="[0-9]{5}">
-                        </div>
-                        <div class="col">
-                            <label for="espece">Fonctions</label>
-                            <select name="fc[]" id="mltp-fnc" class="selectpicker show-tick form-control " multiple required>
-                                <?php
-                                foreach(Personnel::get_fonctions() as  $row){
-                                    echo '<option class="fnct-choice" value="'.$row["fc_id"].'">'.$row["fc_titre"].'</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
+                    <div class="col">
+                        <label for="nom">Code postal</label>
+                        <input type="text" class="form-control" name="add-codep" id="codepostal" placeholder="" required pattern="[0-9]{5}">
+                    </div>
+                    <div class="col">
+                        <label for="espece">Fourrière</label>
+                        <select name="fc[]" id="mltp-fnc" class="selectpicker show-tick form-control " multiple required>
+                            <?php
+                            foreach(Personnel::get_fonctions() as  $row){
+                                echo '<option class="fnct-choice" value="'.$row["fc_id"].'">'.$row["fc_titre"].'</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
 
                 </div>
 

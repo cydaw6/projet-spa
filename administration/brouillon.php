@@ -25,10 +25,10 @@ foreach ($testp->toArray() as $x => $w){
 }*/
 
 
-/*$res = $db->query("SELECT * FROM personnel");
+/*$cnx = $db->query("SELECT * FROM personnel");
 
 echo "<table><tr><th>ID</th><th>Nom</th><th>Prenom</th><th>Adresse</th><th>Localite</th><th>Code Postal</th><th>Num Secu</th><th>Id identifiant</th></tr>";
-while($row = $res->fetch()){
+while($row = $cnx->fetch()){
     echo "<tr><td>".$row["p_id"]."</td><td>".$row["p_nom"]." ".$row["p_prenom"]."</td></tr>";
 }*/
 

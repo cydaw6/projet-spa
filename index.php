@@ -21,7 +21,7 @@
       <?php
         require_once("./classes/__init__.php");
         require("./global-includes/header.php");
-        $res = $db->query("SELECT COUNT(*) nbr FROM animal;");
+        $cnx = $db->query("SELECT COUNT(*) nbr FROM animal;");
         // basename(dirname(__FILE__));
         // echo $GLOBALS["p_root"];
       ?>
@@ -60,7 +60,7 @@
                   <div class="animals-count unique-font text-uppercase">
                       <p >Actuellement <br>
                           <span class="orange">
-                              <?php echo $res->fetch()["nbr"] . ' animaux'; ?>
+                              <?php echo $cnx->fetch()["nbr"] . ' animaux'; ?>
                           </span>
                               à l'adoption
 

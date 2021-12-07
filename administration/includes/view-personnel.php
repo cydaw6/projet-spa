@@ -87,7 +87,7 @@ if($_GET["page"] != 0){
                 <p class="">Nom</p>
             </div>
             <div class="col text-lg-end">
-                <p class=""> <b>Tel</p>
+                <p class="">Tel</p>
             </div>
         </div>
     ';

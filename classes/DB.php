@@ -58,9 +58,9 @@ class DB
          * Renvoie le nom des colonnes de la table correspondante
          */
         try{
-            $res = DB::$db->prepare("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? ORDER BY ORDINAL_POSITION ");
-            $res->execute(array($table));
-            return array_column($res->fetchAll(), "column_name");
+            $cnx = DB::$db->prepare("SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? ORDER BY ORDINAL_POSITION ");
+            $cnx->execute(array($table));
+            return array_column($cnx->fetchAll(), "column_name");
         }catch (PDOException $e){
             echo $e;
         }
