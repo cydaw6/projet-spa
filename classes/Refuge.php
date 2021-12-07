@@ -122,4 +122,26 @@ class Refuge{
         return $res->fetchAll();
     }
 
+    public function add_soin($p_id, $a_id, $ts_id, $v_id, $comm){
+        $res = DB::$db->prepare("
+            INSERT INTO soin VALUES(DEFAULT, DATE_TRUNC('second', NOW()), ?, ?, ?, ?, ?)
+        ");
+        return $res->execute(array($comm, $p_id, $a_id, $v_id, $ts_id));
+    }
+
+    public static function get_all_personnel(){
+        return DB::$db->query("SELECT * FROM personnel ORDER BY p_prenom, p_nom")->fetchAll();
+    }
+
+    public function update_personnel_fonctions($p_id, $fc_ids){
+        $res = DB::$db->prepare("DELETE FROM exerce WHERE p_id = ? AND r_id = ?");
+        $res->execute(array($p_id, $this->data["r_id"]));
+        foreach($fc_ids as $v){
+            $res = DB::$db->prepare("INSERT INTO exerce VALUES(?, ?, ?)");
+            $res->execute(array($p_id, $v, $this->data["r_id"]));
+        }
+
+    }
+
+
 }

@@ -2,7 +2,7 @@
 $view_name = "soins";
 
 
-include_once("search-add.php");
+include_once("search-add-btn.php");
 ?>
 
 

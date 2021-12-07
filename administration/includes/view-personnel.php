@@ -1,40 +1,72 @@
 <?php
 $view_name = "personnel";
 
-include_once("search-add.php");
+if (1 == 1 || $_GET["act"] == "add" && $refuge->data["p_id"] == $_SESSION["user"]->data["p_id"]) {
+    ?>
+    <div class="row">
+        <?php
+        $cpyget = $_GET;
+        if($_GET["act"] == "update"){
+            $cpyget["act"] = "search";
+            $url1 = $base_url.http_build_query($cpyget);
+            $cpyget["act"] = "add-user";
+            $url2 = $base_url.http_build_query($cpyget);
+
+            echo '
+            <p>
+                <span class="page-btn">
+                    <a href="'. $url1.'" class="add"> 
+                        <i class="fas fa-search fa-2x right"></i> </a> 
+                    <a href="'.$url2.'" class="add">
+                        <i class="fas fa-user-plus fa-2x left"></i>
+                    </a>
+                </span>
+            </p>
+        ';
+        }else if($_GET["act"] == "add-user"){
+            $cpyget["act"] = "search";
+            $url1 = $base_url.http_build_query($cpyget);
+            $cpyget["act"] = "update";
+            $url2 = $base_url.http_build_query($cpyget);
+            echo '
+            <p>
+                <span class="page-btn">
+                    <a href="'. $url1.'" class="add"> 
+                        <i class="fas fa-search fa-2x right"></i> </a> 
+                    <a href="'.$url2.'" class="add">
+                        <i class="fas fa-user-edit fa-2x left"></i></i>
+                    </a>
+                </span>
+            </p>
+        ';
+        }else{
+            $cpyget["act"] = "update";
+            echo '
+            <span class="page-btn"><a href="'. $base_url.http_build_query($cpyget).'" class="add"><i class="fas fa-user-edit fa-2x right"></i></a></span>
+        ';
+        }
+        ?>
+    </div>
+    <?php
+
+}
+
+
+
+if ((1 == 1 && $_GET["act"] == "add-user") || $_GET["act"] == "add" && $refuge->data["p_id"] == $_SESSION["user"]->data["p_id"]) {
+    include("add-forms/add-personnel.php");
+
+}else if((1 == 1 && $_GET["act"] == "update") || $_GET["act"] == "add" && $refuge->data["p_id"] == $_SESSION["user"]->data["p_id"]) {
+    include("add-forms/add-fonction-personnel.php");
+
+} else {
+    include("search-forms/search-personnel.php");
+
+}
+
 ?>
 
-<form method="get" >
 
-    <div class="row">
-
-        <div class="col">
-            <label for="nom">Nom Complet</label>
-            <input type="text" class="form-control" name="nom" id="nom" placeholder=""><br>
-        </div>
-        <div class="col">
-
-            <label for="espece">Fonctions</label>
-            <select name="fc[]" class="selectpicker show-tick form-control " multiple>
-                <?php
-                foreach(Personnel::get_fonctions() as  $row){
-                    echo '<option value="'.$row["fc_id"].'">'.$row["fc_titre"].'</option>';
-                }
-                ?>
-            </select>
-            <!--<input type="text" class="form-control" placeholder="age"><br>-->
-            <!--            <textarea name="description" placeholder="Description..."></textarea>
-            -->
-        </div>
-
-        <div class="col-12">
-            <input type="hidden" name="idref" value="<?php echo $_GET["idref"]; ?>">
-            <input type="hidden" name="view" value="<?php echo $view_name; ?>">
-            <input type="hidden" name="page" value="0">
-            <button type="submit" class="btn btn-primary right classic-submit ">Rechercher</button>
-        </div>
-    </div>
-</form>
 <br>
 <?php
 $data_query = Personnel::get_personnel(
@@ -64,7 +96,7 @@ if($_GET["page"] != 0){
         echo '<a href="#" class="row-data-a">
                 <div class="row-data row" >
                     <div class="col">
-                        <p class="">' . $row["p_prenom"] . ' &nbsp; ' . $row["p_nom"] .'</p>
+                        <p class="">' . $row["p_prenom"] . '&nbsp;' . $row["p_nom"] .'</p>
                     </div>
                     <div class="col text-lg-end">
                         <p class="">' . trim(strrev(chunk_split(strrev($row["p_tel"]),2, ' '))) . '</p>

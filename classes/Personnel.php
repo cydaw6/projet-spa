@@ -86,12 +86,43 @@ class Personnel
         return DB::$db->query("SELECT * FROM fonction;")->fetchAll();
     }
 
-    public function exerce_in_refuge($idref){
+    public function exerce_in_refuge($idref): bool
+    {
 
         $params = array_filter($this->get_refuges(), function($v, $k) use ($idref) {
             return ($v["r_id"] == $idref);
         }, ARRAY_FILTER_USE_BOTH);
         return (bool) $params;
+    }
+
+    public static function verif_exist_personnel($nom, $prenom, $num_secu, $tel){
+        $res = DB::$db->prepare("
+                                SELECT
+                                p_id
+                                FROM personnel
+                                WHERE (p_tel = ? AND p_nom = ? AND p_prenom = ?)
+                                OR p_num_secu = ?
+        ");
+        $res->execute(array($tel, $nom, $prenom, $num_secu));
+        return $res->fetchAll();
+    }
+
+    public static function add_personnel($nom, $prenom, $num_secu, $tel, $adresse, $localite, $codep, $login){
+        $res = DB::$db->prepare("INSERT INTO personnel
+            VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING p_id
+        ");
+        $res->execute(array($nom, $prenom, $adresse, $localite, $codep, $num_secu, $tel, $login));
+        return $res->fetch()["p_id"];
+    }
+
+    public static function create_logins($nom, $prenom){
+        $login = substr($prenom, 0, 3);
+        $login .= substr($nom, 0, 1);
+        $login .= rand(0, 9).rand(0, 9).rand(0, 9);
+        $mdp = hashage(generateRandomString());
+        $res = DB::$db->prepare("INSERT INTO identifiant VALUES(DEFAULT, ?, ?) RETURNING id");
+        $res->execute(array($login, $mdp));
+        return $res->fetch()["id"];
     }
 
 }

@@ -1,22 +1,68 @@
 
 <?php
-
+$err_msg = "";
 
 if(isset($_POST["add-send"])){
+    // regarde si le type de soin est n'est pas une vaccination
+    // si oui alors aucun vaccin ne doit être selectionné
     $vac = Refuge::get_type_soins();
-
-    $ts_id_vac = array_filter($_GET, function($v, $k) {
-        echo var_dump($v);
-        return 1 == 1;
+    $ts_id_vac = array_filter($vac, function($v, $k) {
+        return $v["ts_libelle"] == "Vaccination";
     }, ARRAY_FILTER_USE_BOTH);
    
-    if($_POST["add-v-id"] !="Aucun" && $_POST["add-ts-id"] == $ts_id_vac){
-       echo 'Le type de soin n\'est pas un vaccin';
+    if($_POST["add-v-id"] != -1 && $_POST["add-ts-id"] != array_shift($ts_id_vac)["ts_id"]){
+        $err_msg = 'Utilisation de Vaccin impossible. Le type de soin n\'est pas une vaccination';
+
     }else{
-        $espece = Animal::get_animal_by_id($_POST["add-a-id"])["e_id"];
-        $vaccins = Animal::get_vaccins_by_espece();
-        echo var_dump($vaccins);
+        $espece_exist_v = array();
+        if($_POST["add-v-id"] != -1){
+            // regarde si le vaccin pour l'espèce existe
+            $espece_id = Animal::get_animal_by_id($_POST["add-a-id"])->data["e_id"];
+            $vaccins = DB::$db->query("SELECT * FROM requiere r")->fetchAll();
+            $espece_exist_v = array_filter($vaccins, function($v, $k) use ($espece_id) {
+                return $v["v_id"] == $_POST["add-v-id"] && $espece_id == $v["e_id"];
+            }, ARRAY_FILTER_USE_BOTH);
+        }
+
+
+        if($_POST["add-v-id"] == -1 || count($espece_exist_v)){
+            // on ajoute le soin
+            if($refuge->add_soin(
+                $_SESSION["user"]->data["p_id"],
+                $_POST["add-a-id"],
+                $_POST["add-ts-id"],
+                ($_POST["add-v-id"] == -1 ? null: $_POST["add-v-id"]),
+                ($_POST["comm"] == "" ? null : $_POST["comm"])
+                )){
+                 ;
+
+                 echo '
+                    <div class=" row" >
+                        <div class="col text-lg-center">
+                                    <p > <span class="text-lg-center" style="color: lightgreen!important;">Le soin a été ajouté</span> </p>
+                        </div>
+                    </div>
+                 ';
+
+
+            }else{
+                $err_msg = "Impossible d'ajouter le soin";
+            }
+        }else{
+            $err_msg = "Le type de vaccin ne correspond pas à l'espèce de l'animal";
+        }
+
+
     }
+    echo '
+
+        <div class=" row" >
+            <div class="col text-lg-center">
+                        <p > <span class="text-lg-center" style="color: var(--main-warn-orange)!important;">'.$err_msg.'</span> </p>
+            </div>
+        </div>
+        
+';
 }
 
 
@@ -54,7 +100,7 @@ if(isset($_POST["add-send"])){
             </select>
             <label for="espece">Vaccin</label>
             <select name="add-v-id" class="selectpicker show-tick form-control " required>
-                <option value="aucun" selected> Aucun </option>
+                <option value="-1" selected> Aucun </option>
                 <?php
                 foreach(Animal::get_vaccins() as  $row){
                     echo '<option value="'.$row["v_id"].'">'.$row["v_nom"].'</option>';
@@ -66,7 +112,7 @@ if(isset($_POST["add-send"])){
 
         <label>
             Description
-            <textarea name="description" placeholder="Description..." class="form-control"></textarea>
+            <textarea name="comm" placeholder="Description..." class="form-control"></textarea>
         </label>
 
         <div class="col">

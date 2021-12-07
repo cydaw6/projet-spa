@@ -1,7 +1,7 @@
 <?php
 $view_name = "animaux";
 
-include_once("search-add.php");
+include_once("search-add-btn.php");
 
 ?>
 
