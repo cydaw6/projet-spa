@@ -6,7 +6,11 @@ class Refuge{
 
     public static $nom_table = "refuge";
 
-    public static function get_refuge_data_by_id($idref)
+    /** Renvoie une objet Refuge correspondant à  l'id donné
+     * @param $idref
+     * @return Refuge
+     */
+    public static function get_refuge_data_by_id($idref): Refuge
     {
         $refuge = new Refuge();
         $cnx = DB::$db->prepare("SELECT * FROM refuge WHERE r_id = ?");
@@ -15,17 +19,26 @@ class Refuge{
         return $refuge;
     }
 
-    public static function creer($data, $identifiants){
-        /**
-         * Renvoie un personnel avec les données en paramètre
-         */
+    /**
+     * Renvoie un personnel avec les données en paramètre
+     */
+    /*public static function creer($data, $identifiants){
+
         $personnel = new Personnel();
         $personnel->data = array_combine(DB::db_column_names(Refuge::$nom_table), $data);
         $personnel->identifiants = array_combine(DB::db_column_names("identifiant"), $identifiants);
         return $personnel;
-    }
+    }*/
 
-    public function get_transferts($limit = MAX_LIMIT, $offset = 0, $date_ord = "ASC", $refuge_ord = "ASC"){
+    /** Renvoie la liste de tous les transferts effectués depuis le refuge
+     * sous forme de tableau
+     * @param int $limit
+     * @param int $offset
+     * @param string $date_ord
+     * @param string $refuge_ord
+     * @return mixed
+     */
+    public function get_transferts(int $limit = MAX_LIMIT, int $offset = 0, string $date_ord = "ASC", string $refuge_ord = "ASC"){
         $cnx = DB::$db->prepare("SELECT 
                                     animal.*,
                                     e.e_nom,
@@ -46,11 +59,25 @@ class Refuge{
         return $cnx->fetchAll();
     }
 
+    /**
+     * Renvoie les types de soins sous forme de tableau
+     * @return mixed
+     */
     public static function get_type_soins(){
         return DB::$db->query("SELECT * from type_soin")->fetchAll();
     }
 
-    public function get_soins($nom_animal, $type_s, $limit = MAX_LIMIT, $offset = 0, $date_ord = "ASC"){
+    /**
+     * Renvoie la liste des soins effectués dans le refuge
+     * sous forme de tableau en fonction de différents paramètres de tri
+     * @param $nom_animal
+     * @param $type_s
+     * @param int $limit
+     * @param int $offset
+     * @param string $date_ord
+     * @return mixed
+     */
+    public function get_soins($nom_animal, $type_s, int $limit = MAX_LIMIT, int $offset = 0, string $date_ord = "ASC"){
 
         $cnx = DB::$db->prepare("
                                 WITH histo_transfert as (
@@ -157,6 +184,54 @@ class Refuge{
 
     public static function get_all_refuge(){
         $cnx = DB::$db->query("SELECT * FROM refuge ORDER BY r_nom");
+        return $cnx->fetchAll();
+    }
+
+    /**
+     * Ajoute un animal au refuge
+     * @param $nom
+     * @param $date_n
+     * @param $sexe
+     * @param $comm
+     * @param $e_id
+     * @param $f_id
+     * @return mixed
+     */
+    public function add_animal($nom, $date_n, $sexe, $comm, $e_id, $f_id){
+        $cnx = DB::$db->prepare("INSERT INTO animal VALUES(DEFAULT, ?, ?, ?, ?, NULL, NULL, NOW(), ?, NULL, ?, ?)");
+        return $cnx->execute(array($nom, $date_n, $sexe, $comm, $e_id, $f_id, $this->data["r_id"]));
+    }
+
+    public function liste_rappel_vaccin(){
+        $cnx = DB::$db->prepare("SELECT
+                                    DISTINCT
+                                    a.a_id
+                                    , a.a_nom
+                                    , a.a_sexe
+                                    , e.e_nom
+                                    , v.v_nom
+                                    FROM dernier_refuge dr
+                                    NATURAL JOIN animal a
+                                    NATURAL JOIN espece e
+                                    JOIN requiere r on e.e_id = r.e_id
+                                    JOIN vaccin v on r.v_id = v.v_id
+                                    WHERE dr.r_id = ?
+                                        AND a.a_date_deces IS NULL
+                                        AND a.a_date_adoption IS NULL
+                                        AND v.v_rappel IS NOT NULL
+                                        AND NOT EXISTS (
+                                            SELECT
+                                                s.s_id
+                                            FROM soin s
+                                            WHERE s.v_id = v.v_id
+                                                AND s.a_id = a.a_id
+                                                AND NOW() - s.s_date  < v.v_rappel
+                                            ORDER BY s.s_date DESC
+                                            LIMIT 1
+                                        )
+                                
+                                    ORDER BY a.a_nom");
+        $cnx->execute(array($this->data["r_id"]));
         return $cnx->fetchAll();
     }
 

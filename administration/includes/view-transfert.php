@@ -10,7 +10,6 @@ $view_name = "transfert";
 
 <?php
 include("add-forms/add-transferts.php");
-
 $data_query = $refuge->get_transferts(
         $offset_page,
     $offset_page * $_GET["page"],
@@ -33,7 +32,8 @@ if($_GET["page"] != 0){
     echo '<p style="color: white;">Page '.$_GET["page"].'</p>';
 }
 echo '
-         
+         <br>
+
         <div class=" row" >
             <div class="col">
                 <p class="">Nom</p>
@@ -60,7 +60,7 @@ foreach ($data_query as $row) {
                         <p class="">' . $row["e_nom"] .'</p>
                     </div>
                     <div class="col text-lg-center">
-                        <p class="">' . $row["t_date"] . '</p>
+                        <p class="">' . date('d-m-Y', strtotime($row["t_date"])) . '</p>
                     </div>
                     <div class="col text-lg-end">
                         <p class="">' . $row["r_nom"] . '</p>

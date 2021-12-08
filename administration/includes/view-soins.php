@@ -2,11 +2,43 @@
 $view_name = "soins";
 
 
-include_once("search-add-btn.php");
+
 ?>
+    <div class="row">
+        <?php
+        $cpyget = $_GET;
+        if($_GET["act"] == "add"){
+            $cpyget["act"] = "search";
 
+            echo '
+            <span class="page-btn">
+                           
 
-
+                <a href="./fiche-refuge.php?idref='.$_GET["idref"] .'&view=vaccins" class="add"> 
+                
+                    <i class="fas fa-syringe fa-2x left"></i>  &nbsp; Prochain vaccins
+                </a>
+                <a href="'. $base_url.http_build_query($cpyget).'" class="add"> 
+                    <i class="fas fa-search fa-2x right"></i>
+                </a>
+            </span>
+        ';
+        }else{
+            $cpyget["act"] = "add";
+            echo '
+            <span class="page-btn">
+                <a href="./fiche-refuge.php?idref='.$_GET["idref"] .'&view=vaccins" class="add"> 
+                    <i class="fas fa-syringe fa-2x left"></i>
+                </a>
+                <a href="'. $base_url.http_build_query($cpyget).'" class="add"> 
+                    <i class="fas fa-plus fa-2x right"></i>
+                </a>
+            </span>
+        ';
+        }
+        ?>
+    </div>
+<br>
 <?php
 
     if($_GET["act"] == "add"){
@@ -50,7 +82,7 @@ echo '
                 <p class="">Nom</p>
             </div>
             <div class="col text-lg-center">
-                <a href="'. $base_url . $dateOrd.'" class="a-order"><p > Date du transfert <i class="fas fa-sort"></i></p></a>
+                <a href="'. $base_url . $dateOrd.'" class="a-order"><p > Date <i class="fas fa-sort"></i></p></a>
             </div>
             <div class="col text-lg-end">
                  <p class=""> Type de soin</p>
@@ -65,7 +97,7 @@ foreach ($data_query as $row) {
                         <p class="">' . $row["a_nom"].'</p>
                     </div>
                     <div class="col text-lg-center">
-                        <p class="">' . $row["s_date"] . '</p>
+                        <p class="">' . date('d-m-Y H:i:s', strtotime($row["s_date"])) . '</p>
                     </div>
                     <div class="col text-lg-end">
                         <p class="">' . $row["ts_libelle"] . '</p>

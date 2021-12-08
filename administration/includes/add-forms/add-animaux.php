@@ -2,41 +2,44 @@
 
 $err_msg = "";
 
-if(isset($_POST["add-send"])){
+if(isset($_POST["add-send"])) {
 
-
-    if(count($p) != 0){
-        $err_msg = "L'utilisateur fait déjà partie de la spa";
-    }else{
-
-        if($personnel_id){
-
-            $refuge->update_personnel_fonctions($personnel_id,  ($_POST["fc"] ?? array()));
+    if (Refuge::check_capacité($refuge->data["r_id"])) {
+        if ($refuge->add_animal(
+            $_POST["add-nom"],
+            ($_POST["add-date"] ?? null),
+            $_POST["add-sexe"],
+            ($_POST["add-description"] == "" ? null : $_POST["add-description"]),
+            $_POST["espece"],
+            ($_POST["fo"] == "aucune" ? null:  $_POST["fo"])
+        )) {
 
             echo '
                     <div class=" row" >
                         <div class="col text-lg-center">
-                                    <p > <span class="text-lg-center" style="color: lightgreen!important;">L\'utilisateur a été ajouté. <br> login: '.$login["login"].'<br> Mot de passe: '.$login["mdp"].'</span> </p>
+                                    <p > <span class="text-lg-center" style="color: lightgreen!important;">L\'animal a été ajouté.</p>
                         </div>
                     </div>
                  ';
 
-        }else{
+        } else {
             $err_msg = "Impossible d'ajouter l'utilisateur";
         }
+
+    } else {
+        $err_msg = "Impossible d'ajouter. Le refuge est déjà à pleine capacité.";
     }
     echo '
 
         <div class=" row" >
             <div class="col text-lg-center">
-                        <p > <span class="text-lg-center" style="color: var(--main-warn-orange)!important;">'.$err_msg.'</span> </p>
+                        <p > <span class="text-lg-center" style="color: var(--main-warn-orange)!important;">' . $err_msg . '</span> </p>
             </div>
         </div>
         
 ';
 
 }
-
 ?>
     <!--https://regexlib.com/CheatSheet.aspx?AspxAutoDetectCookieSupport=1-->
     <form method="post" >
@@ -48,60 +51,54 @@ if(isset($_POST["add-send"])){
                         <input type="text" class="form-control" name="add-nom" id="nom" placeholder="" required>
                     </div>
                     <div class="col">
-                        <label for="prenom">Date de naissance</label>
-                        <input type="date" class="form-control" name="add-prenom" id="prenom" placeholder="" required>
+                        <label for="daten">Date de naissance</label>
+                        <input type="date" class="form-control" name="add-date" id="daten" placeholder="">
 
                     </div>
-                </div>
-
-
-                <div class="col">
-                    <label for="nom">Description</label>
-                    <textarea  class="form-control" name="add-adresse" id="adresse" placeholder="" required></textarea>
-
-                </div>
-            </div>
-
-            <div class="col">
-                <label for="nom">Num. de sécu.</label>
-                <input type="text" class="form-control" name="add-secu" id="secu" placeholder="" required pattern="[0-9]{15}">
-                <label for="nom">localite</label>
-                <input type="text" class="form-control" name="add-localite" id="adresse" placeholder="" required>
-
-            </div>
-
-            <div class="col">
-                <div class="row">
                     <div class="col">
-                        <label for="tel">Téléphone</label>
-                        <input type="text" class="form-control" name="add-tel" id="tel" placeholder=""  pattern="[0-9]{2,10}" required>
+                        <label for="sexe">Sexe</label>
+                        <select name="add-sexe" id="sexe" class="selectpicker show-tick form-control " required>
+                            <option class="fnct-choice" value="M" selected>Mâle</option>
+                            <option class="fnct-choice" value="F">Femelle</option>
+                        </select>
+
                     </div>
                 </div>
 
                 <div class="row">
-
-                    <div class="col">
-                        <label for="nom">Code postal</label>
-                        <input type="text" class="form-control" name="add-codep" id="codepostal" placeholder="" required pattern="[0-9]{5}">
-                    </div>
-                    <div class="col">
-                        <label for="espece">Fourrière</label>
-                        <select name="fc[]" id="mltp-fnc" class="selectpicker show-tick form-control " multiple required>
+                    <div class="col-5">
+                        <label for="espece">Espece</label>
+                        <select name="espece" id="espece" class="form-control selectpicker" required>
                             <?php
-                            foreach(Personnel::get_fonctions() as  $row){
-                                echo '<option class="fnct-choice" value="'.$row["fc_id"].'">'.$row["fc_titre"].'</option>';
+                            foreach(Animal::get_especes() as  $row){
+                                echo '<option value="'.$row["e_id"].'">'.$row["e_nom"].'</option>';
                             }
                             ?>
                         </select>
                     </div>
+                    <div class="col">
+                        <label for="fourriere">Fourrière</label>
+                        <select name="fo" id="fourriere" class="selectpicker show-tick form-control " required>
+                            <option class="fnct-choice" value="aucune">Aucune</option>
 
+                            <?php
+                            foreach(Animal::get_fourrieres() as $row){
+                                echo '<option class="fnct-choice" value="'.$row["f_id"].'">'.$row["f_localite"].', <b>'.$row["f_adresse"].'</b></option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
 
+            </div>
 
-
-
-
-
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <label for="description">Description</label>
+                        <textarea  class="form-control" name="add-description" id="description" placeholder=""></textarea>
+                        </div>
+                </div>
             </div>
 
             <div class="col-12">

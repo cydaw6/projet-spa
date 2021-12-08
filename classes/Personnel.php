@@ -59,7 +59,10 @@ class Personnel
     }
 
     public function get_refuges(){
-        $cnx = DB::$db->prepare("SELECT DISTINCT * FROM exerce e JOIN refuge r ON e.r_id = r.r_id WHERE e.p_id = ?");
+        /**
+         * Renvoie les refuges dans lesquels l'utilisateur à une fonction
+         */
+        $cnx = DB::$db->prepare("SELECT DISTINCT r.* FROM exerce e JOIN refuge r ON e.r_id = r.r_id WHERE e.p_id = ?");
         $cnx->execute(array($this->data["p_id"]));
         return $cnx->fetchAll();
     }

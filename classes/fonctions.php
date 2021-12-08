@@ -1,11 +1,13 @@
 <?php
 
+/**
+ * Renvoie le meilleur coût (meilleur nombre d'itérations
+ * pour la fonction de hachage propre au serveur
+ * @return int
+ */
 function best_cost(): int
 {
-    /**
-     * Renvoie le meilleur coût (meilleur nombre d'itérations
-     * pour la fonction de hachage propre au serveur
-     */
+
     $timeTarget = 0.05; // 50 millisecondes
 
     $cost = 8;
@@ -18,13 +20,23 @@ function best_cost(): int
     return $cost;
 }
 
+/**
+ * Renvoi le hachage d'une chaîne de caractère entrée en paramètre
+ * @param $txt
+ * @return false|string|null
+ */
 function hashage($txt){
-    /**
-     * Renvoi le hachage d'une chaîne de caractère entrée en paramètre
-     */
     return password_hash($txt, PASSWORD_DEFAULT, ["cost" => best_cost()]);
 }
 
+/**
+ * Enlève les espèce de fin et de début en trop
+ * Enlève les slashes
+ * Transformes les caractère spéciaux d'une chaîne à son équivalent
+ * HTML (ex: '<' => ' &lt;')
+ * @param $data
+ * @return string
+ */
 function sanitize($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -32,6 +44,13 @@ function sanitize($data) {
     return $data;
 }
 
+/**
+ * Renvoie le booleen associé
+ * à "on" et "off"
+ * Pratique pour les input checkbox
+ * @param $val
+ * @return bool
+ */
 function checktobool($val){
     if($val == "on"){
         return true;
@@ -43,8 +62,15 @@ function reverse_ord($ord){
     return $ord === "ASC" ? "DESC": "ASC";
 }
 
+/**
+ * Renvoie une chaîne de caractère
+ * alphanumérique aléatoire d'une taille donné.
+ * @param int $length
+ * @return string
+ */
 function generateRandomString($length = 10)
 {
+
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';

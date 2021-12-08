@@ -34,7 +34,7 @@ if(!isset($_GET["act"])){
 $offset_page = 10;
 $curr_url = $_SERVER["REQUEST_URI"];
 $base_url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) . "?";
-
+$row_count = 0;
 // on vérifie que le personnel à bien accès à la fiche du refuge
 $user = $_SESSION["user"];
 if(!$user->exerce_in_refuge($refuge->data["r_id"])){
@@ -126,6 +126,9 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                     }elseif ($_SESSION["view"] === "infos"){
                                         include("includes/view-infos.php");
 
+                                    }elseif ($_SESSION["view"] === "vaccins"){
+                                        include("includes/rappels-view.php");
+
                                     }
 
                                     if($_SESSION["view"] != "infos"){
@@ -157,7 +160,7 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
     <!-- Option du multiselect -->
     <script>
         $.fn.selectpicker.Constructor.DEFAULTS.selectedTextFormat = 'count';
-        $.fn.selectpicker.Constructor.DEFAULTS.noneSelectedText = " fonctions";
+        $.fn.selectpicker.Constructor.DEFAULTS.noneSelectedText = "0 élément";
 
     </script>
 

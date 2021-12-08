@@ -7,7 +7,7 @@ include_once("search-add-btn.php");
 
 <?php
 
-if($_GET["act"] == "add" && Refuge::check_capacité($refuge->data["r_id"])){
+if($_GET["act"] == "add" && Refuge::check_capacité($refuge->data["r_id"])){ // vérifie que le refuge n'est pas déjà plein
     include("add-forms/add-animaux.php");
 }else{
     include("search-forms/search-animaux.php");

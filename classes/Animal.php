@@ -29,5 +29,14 @@ class Animal{
         return array();
     }
 
+    /**
+     * Renvoie toutes les fourrière dans tableau
+     * @return mixed
+     */
+    public static function get_fourrieres(){
+        return DB::$db->query("SELECT * FROM fourriere ORDER BY f_localite")->fetchAll();
+    }
+
+
 
 }

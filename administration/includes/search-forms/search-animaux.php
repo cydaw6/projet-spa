@@ -13,7 +13,7 @@
         </div>
         <div class="col">
             <label for="espece">Espece</label>
-            <select name="espece" id="espece" class="form-control">
+            <select name="espece" id="espece" class="form-control selectpicker">
                 <option value="all" selected>Toutes</option>
                 <?php
                 foreach(Animal::get_especes() as  $row){
@@ -21,9 +21,6 @@
                 }
                 ?>
             </select>
-            <!--<input type="text" class="form-control" placeholder="age"><br>-->
-            <!--            <textarea name="description" placeholder="Description..."></textarea>
-            -->
         </div>
 
         <div class="col-12">
