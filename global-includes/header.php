@@ -30,7 +30,7 @@
                         <li class="nav-item brd-right">
                             <a class="nav-link"  <?php echo 'href="'.ROOT.'administration/accueil.php"'; ?>>Refuges</a>
                         </li>
-                        <li class="nav-item dropdown">
+                       <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 A propos
                             </a>
@@ -40,7 +40,7 @@
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
                 <?php

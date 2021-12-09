@@ -28,7 +28,7 @@ $view_name = "soins";
             echo '
             <span class="page-btn">
                 <a href="./fiche-refuge.php?idref='.$_GET["idref"] .'&view=vaccins" class="add"> 
-                    <i class="fas fa-syringe fa-2x left"></i>
+                    <i class="fas fa-syringe fa-2x left"></i>  &nbsp; Prochain vaccins
                 </a>
                 <a href="'. $base_url.http_build_query($cpyget).'" class="add"> 
                     <i class="fas fa-plus fa-2x right"></i>
