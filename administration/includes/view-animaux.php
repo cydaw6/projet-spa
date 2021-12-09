@@ -34,7 +34,7 @@ if($_GET["page"] != 0){
 }
     foreach($data_query as $row){
         echo '
-                  <a href="#" class="row-data-a">
+                  <a href="'.$base_url.http_build_query(array("idref" => $refuge->data["r_id"], "view" => "fa", "aid" => $row["a_id"])).'" class="row-data-a">
                     <div class="row-data row" >
                         <div class="col">
                             <p class="">' . $row["a_nom"].'</p>

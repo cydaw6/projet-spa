@@ -3,8 +3,8 @@
 // $path =  '/'.basename(dirname(__FILE__));
 // $path = dirname($_SERVER["PHP_SELF"]);
 //define("ROOT","/~***REMOVED***.***REMOVED***/");
- const ROOT = "/";
-//const ROOT = "/~***REMOVED***.***REMOVED***/";
+//const ROOT = "/";
+const ROOT = "/~***REMOVED***.***REMOVED***/";
 ?>
 
 <div class="logo-nav">
