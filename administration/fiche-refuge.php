@@ -103,11 +103,6 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                         <p>&nbsp;&nbsp;Soins&nbsp;&nbsp;</p>
                                     </div>
                                 </a>
-                                <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=adoptions">
-                                    <div class="nav-a <?php echo ($_SESSION["view"] === "adoptions") ? "nav-a-select" : ""; ?>" >
-                                        <p>Adoptions</p>
-                                    </div>
-                                </a>
 
                             <?php 
 
