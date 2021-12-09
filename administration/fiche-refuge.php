@@ -34,6 +34,7 @@ if(!isset($_GET["act"])){
 $offset_page = 10;
 $curr_url = $_SERVER["REQUEST_URI"];
 $base_url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) . "?";
+//echo $base_url.'<br>';
 $row_count = 0;
 // on vérifie que le personnel à bien accès à la fiche du refuge
 $user = $_SESSION["user"];
@@ -99,7 +100,12 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                 </a>
                                 <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=soins">
                                     <div class="nav-a <?php echo ($_SESSION["view"] === "soins") ? "nav-a-select" : ""; ?>" >
-                                        <p>Soins</p>
+                                        <p>&nbsp;&nbsp;Soins&nbsp;&nbsp;</p>
+                                    </div>
+                                </a>
+                                <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=adoptions">
+                                    <div class="nav-a <?php echo ($_SESSION["view"] === "adoptions") ? "nav-a-select" : ""; ?>" >
+                                        <p>Adoptions</p>
                                     </div>
                                 </a>
 
@@ -129,6 +135,10 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                     }elseif ($_SESSION["view"] === "vaccins"){
                                         include("includes/rappels-view.php");
 
+                                    }elseif($_SESSION["view"] === "fa"){
+                                        if(isset($_GET["aid"])){
+                                            include("includes/view-fiche-animal.php");
+                                        }
                                     }
 
                                     if($_SESSION["view"] != "infos"){

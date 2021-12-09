@@ -75,7 +75,7 @@ class Personnel
                                 JOIN refuge r ON r.r_id = e.r_id
                                 JOIN personnel p ON p.p_id = e.p_id
                                 WHERE e.r_id = ?
-                                AND p.p_nom || ' ' || p.p_prenom LIKE '%' || ? || '%'
+                                AND UPPER(p.p_nom) || ' ' || UPPER(p.p_prenom) LIKE '%' || UPPER(?) || '%'
                                 ".(count($fonctions) ? "AND e.fc_id IN (".implode(',', $fonctions).")" : "")."
                                 ORDER BY p.p_prenom, p.p_nom
                                 LIMIT ? OFFSET ?
