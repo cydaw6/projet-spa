@@ -3,6 +3,15 @@
 $view_name = "fa";
 
 
+/**
+ * 
+ *  Vérifier que l'animal appartient bien aux refuge 
+ * 
+ * 
+ */
+
+
+// données de l'animal
 $animal = Animal::get_animal_by_id($_GET['aid']);
 $adata = $animal->get_all_data(); 
 
@@ -10,12 +19,14 @@ $naissance = ($animal->data["a_date_naissance"] ? date('d / m / Y', strtotime($a
 $deces = ($animal->data["a_date_deces"] ? date('d / m / Y', strtotime($animal->data["a_date_deces"])) : '');
 $fourriere = ($adata["f_id"] ? $adata["f_adresse"].', '. $adata["f_localite"].', '. $adata["f_code_postal"] : '');
 $adoptant = $animal->get_adoptant();
-$adoption = '<br> Le ' . date('d/ m/ Y', strtotime($animal->data["a_date_adoption"])) . ' <br> Par ' .$adoptant["pa_nom"].
-', demeurant '.$adoptant["pa_adresse"] .' '.$adoptant["pa_localite"].' '.$adoptant["pa_code_postal"]
-;
-$adoption = ($adoptant["pa_id"] ? $adoption : '' );
+
+$adoption = (($adoptant["pa_id"] ?? null) ? '<br> Le '
+    . date('d/ m/ Y', strtotime($animal->data["a_date_adoption"]))
+    . ' <br> Par ' .$adoptant["pa_nom"].
+    ', '.$adoptant["pa_adresse"] .' '.$adoptant["pa_localite"].' '.$adoptant["pa_code_postal"] : '' );
 $lrefuge = $animal->get_refuge();
 ?>
+
 
 <span class="page-btn">
     <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=animaux" class="add">
@@ -31,7 +42,22 @@ $lrefuge = $animal->get_refuge();
 
 </div>
 
+
 <?php
+if(isset($_GET["act"]) && $_GET["act"] === "particulier"){
+    include("includes/add-forms/add-particulier.php");
+}
+?>
+
+
+
+<?php
+
+
+$cpyget = $_GET;
+$cpyget["act"]="particulier";
+$url_add_particulier = $base_url.http_build_query($cpyget);
+
 echo '
 <br>
 <br>
@@ -49,38 +75,39 @@ echo '
         if($adoption === ''){
             ?>
 
-            <form method="post" >
+            <form method="post">
 
             <div class="row">
 
-                <div class="col-md-4">
-                    <label for="p-exists" style="color: white;">Personnel existant</label>
+                <div class="col-4">
+                    <label for="p-exists" style="color: white;">Particuliers</label>
                     <select name="p-exists-id" id="p-exists" class="selectpicker show-tick form-control " onchange="getval(this);" required data-live-search="true">
                         <option value="-1" selected>Aucun</option>
                         <?php
                         $exerce_fc = DB::$db->query("SELECT * from exerce WHERE r_id = ".$refuge->data["r_id"])->fetchAll();
                         foreach( Animal::get_particuliers() as  $row){
-                           
-
                             echo '<option class="op-personnel" value="'.$row["pa_id"].'" fnct-ref="'.$fnct.'">'.$row["pa_nom"]
-                                .'&nbsp;'.$row["pa_tel"].'&nbsp;('
-                                .$row["pa_adresse"]
-                                .')</option>';
+                                .'&nbsp;&nbsp;('
+                                .$row["pa_adresse"] . ', '.$row["pa_localite"] . ' '.$row["pa_code_postal"]
+                                .')'.'
+                              
+                            </option>';
+                            // . ' - '.trim(strrev(chunk_split(strrev($row["pa_tel"]),2, ' '))).'
                         }
                         ?>
-
                     </select>
-                <div class="col-12">
+                <div class="col-4-">
                     <input type="hidden" name="idref" value="<?php echo $_GET["idref"]; ?>">
                     <input type="hidden" name="view" value="<?php echo $view_name; ?>">
                     <input type="hidden" name="page" value="0">
                     <br>
                     <button type="submit" class="btn btn-info">Valider</button>
-                    <a href="" ><button type="button" class="btn btn-secondary">Nouveau particulier</button></a>
+                    <a href="<?php echo $url_add_particulier;?>" ><button type="button" class="btn btn-secondary">Nouveau particulier</button></a>
                 </div>
             </div>
             </form>
-            <?php            
+            <br><br>
+            <?php
          
         }
 echo '<p class=""> <b>Date de décès: </b>'.$deces.'</p>

@@ -21,7 +21,7 @@
       <?php
         require_once("./classes/__init__.php");
         require("./global-includes/header.php");
-        $cnx = $db->query("SELECT COUNT(*) nbr FROM animal;");
+        $cnx = DB::$db->query("SELECT COUNT(*) nbr FROM animal");
         // basename(dirname(__FILE__));
         // echo $GLOBALS["p_root"];
       ?>
