@@ -2,7 +2,12 @@
 
 $view_name = "fa";
 
-
+/**
+ * 
+ *  Vérifier que l'animal appartient bien aux refuge 
+ * 
+ * 
+ */
 
 // données de l'animal
 $animal = Animal::get_animal_by_id($_GET['aid']);
@@ -38,7 +43,11 @@ $lrefuge = $animal->get_refuge();
 
 <?php
 if(isset($_GET["act"]) && $_GET["act"] === "particulier"){
+
     echo "'ok";
+
+    include("includes/add-forms/add-particulier.php");
+
 }
 ?>
 
@@ -79,8 +88,6 @@ echo '
                         <?php
                         $exerce_fc = DB::$db->query("SELECT * from exerce WHERE r_id = ".$refuge->data["r_id"])->fetchAll();
                         foreach( Animal::get_particuliers() as  $row){
-                           
-
                             echo '<option class="op-personnel" value="'.$row["pa_id"].'" fnct-ref="'.$fnct.'">'.$row["pa_nom"]
                                 .'&nbsp;&nbsp;('
                                 .$row["pa_adresse"] . ', '.$row["pa_localite"] . ' '.$row["pa_code_postal"]
@@ -90,7 +97,6 @@ echo '
                             // . ' - '.trim(strrev(chunk_split(strrev($row["pa_tel"]),2, ' '))).'
                         }
                         ?>
-
                     </select>
                 <div class="col-4-">
                     <input type="hidden" name="idref" value="<?php echo $_GET["idref"]; ?>">

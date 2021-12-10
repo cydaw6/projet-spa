@@ -58,6 +58,11 @@ function checktobool($val){
     return false;
 }
 
+/**
+ * Renvoie le contraire de 
+ * des codes d'ordre de tri sql
+ * 
+ */
 function reverse_ord($ord){
     return $ord === "ASC" ? "DESC": "ASC";
 }
@@ -79,11 +84,3 @@ function generateRandomString($length = 10)
     }
     return $randomString;
 }
-
-
-/*$params = array_filter($_GET, function($v, $k) {
-    return $k != "page";
-}, ARRAY_FILTER_USE_BOTH);
-$parametres = http_build_query($params) . "&page=".($_GET["page"]+1);*/
-
-//echo basename($_SERVER['REQUEST_URI']);

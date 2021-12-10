@@ -67,5 +67,24 @@ class DB
         return null;
     }
 
+    /*         Fonctions utiles au projet        */
+    /* 
+    Animal:
+        get_vaccins()
+        get_vaccins_by_espece()
+        get_particuliers()
+
+    Personnel:
+        hash_all_psswds()
+        
+
+
+
+
+
+
+    */
+
+
 }
 

@@ -6,13 +6,14 @@ class Personnel
     public $identifiants;
     public static $nom_table = "personnel";
 
+    /**
+    * Renvoie true si l'utilisateur (personnel) c'est correctement
+    * identifié et stocke l'instance Personnel associé
+    * dans une variable session "user"
+    */
     public static function connect($login, $mdp): bool
     {
-        /**
-         * Renvoie true si l'utilisateur (personnel) c'est correctement
-         * identifié et stocke l'instance Personnel associé
-         * dans une variable session "user"
-         */
+        
         $_SESSION["user"]= null;
         $cnx = DB::$db->prepare("SELECT * FROM personnel NATURAL JOIN identifiant WHERE login = ?");
         $cnx->execute(array($login));
@@ -28,28 +29,31 @@ class Personnel
         return false;
     }
 
+    /**
+     * Renvoie les données d'un personnel
+     */
     public static function get_personnel_by_id($idp){
         $cnx = DB::$db->prepare("SELECT * FROM personnel WHERE p_id = ?");
         $cnx->execute(array($idp));
         return $cnx->fetch();
     }
 
+    /**
+    * Renvoie un personnel avec les données en paramètre
+    */
     public static function creer($data, $identifiants){
-        /**
-         * Renvoie un personnel avec les données en paramètre
-         */
         $personnel = new Personnel();
         $personnel->data = array_combine(DB::db_column_names(Personnel::$nom_table), $data);
         $personnel->identifiants = array_combine(DB::db_column_names("identifiant"), $identifiants);
         return $personnel;
     }
 
-    private static function hash_all_psswds_in_db(){
-        /**
-         * Attention avant d'utiliser
-         * Entre conscient de ce que ça fait.
-         * Cette fonction hash tous les mots de passe de la table identifiant
-         */
+    /**
+    * Attention avant d'utiliser
+    * Cette fonction (re)chiffre tous les mots de passe de la table identifiant
+    */
+    private static function hash_all_psswds(){
+        
         $cnx = DB::$db->query("SELECT id, mdp FROM identifiant");
         while($row = $cnx->fetch()){
             $hash = hashage($row["mdp"]);
@@ -58,15 +62,18 @@ class Personnel
         }
     }
 
+    /**
+    * Renvoie les refuges dans lesquels l'utilisateur à une fonction
+    */
     public function get_refuges(){
-        /**
-         * Renvoie les refuges dans lesquels l'utilisateur à une fonction
-         */
         $cnx = DB::$db->prepare("SELECT DISTINCT r.* FROM exerce e JOIN refuge r ON e.r_id = r.r_id WHERE e.p_id = ?");
         $cnx->execute(array($this->data["p_id"]));
         return $cnx->fetchAll();
     }
 
+    /**
+     * Renvoie 
+     */
     public static function get_personnel($idref, $nom_complet, $fonctions, $limit = MAX_LIMIT, $offset = 0){
         $cnx = DB::$db->prepare("
                                 SELECT DISTINCT p.p_nom, p.p_prenom, p.p_tel
