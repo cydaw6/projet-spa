@@ -1,132 +1,145 @@
-<?php
-// faut utiliser nos fichiers à nous : Quand on s'est parlé en voc
-// je t'ai dis qu'il fallait importer le "__init__.php"
-require_once("./classes/__init__.php");
-// require('connexion.inc.php');
 
-$errors=[];
-
-// tester le formulaire seulement si le formulaire a été envoyé
-if(isset($_GET["send"])){
-    if(isset($_GET["nom"]) && empty($_GET['nom'])){
-        array_push($errors,"vous devez saisir une localité avant de faire la recherche");
-        var_dump($errors);exit;
-    }
-
-    if(empty($errors)){
-        $get=filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-        //var_dump($get);
-        // echo $form;
-        /* $req=$connexion->prepare('SELECT * from gvhdbjfjk where localiter = :fom');
-        $req->binValue(':form',$form,PDO::PARAM_STR);
-        $req->execute();
-        $results=$req->fetchAll();
-        */
-
-        // Je t'ai montré quand on s'est parlé sur discord
-        // faut utiliser la classe DB (DataBase = base de données en anglais)
-        $resultats = DB::$db->prepare("SELECT * FROM refuge WHERE r_nom LIKE '%' || ? || '%'");
-        $resultats->execute(array($_GET["nom"]));
-        $resultats = $resultats->fetchAll();
-    }
-}
-?>
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
 
-        <!-- Fontawesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <!-- custom css -->
-        <link href="style.css" rel="stylesheet">
-        <title>SPA - Accueil</title>
+    <!-- custom css -->
 
-    </head>
+
+    <link href="./style.css" rel="stylesheet">
+    <style>
+        .main-view{
+            /*background-color: var(--main-beige);*/
+        }
+
+        .flex-scroller{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .card{
+            margin: 1em;
+            border-radius: 7px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+
+        .card:hover{
+            background-color: antiquewhite;
+        }
+
+        a{
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover{
+            color:black;
+        }
+        .form-container{
+            border-radius: 7px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            padding: 1em;
+
+        }
+    </style>
+    <title>SPA - Refuges </title>
+
 </head>
 <body>
+
 <?php
-// tu peux importer la barre de navigation toute prête que j'ai fait
-require("./global-includes/header.php");
+require_once("./global-includes/header.php");
 ?>
 
-<form action="" method = "get">
-    <!--
-       Tips: L'attribut "required" est pratique,
-      il oblige l'utilisateur à rentrer quelque chose sinon il ne peut pas valider
-     -->
-    <label>
-        Nom
-        <input type="text" name="nom" required placeholder="Essaye de rentrer une lettre">
-    </label>
-    <input type="submit" name="send" value="valider" required>
-</form>
+<div class="main">
+    <!-- infos -->
+
+    <div class="container-fluid section-fiche">
+        <div class="container main-view">
+            <br><br>
+            <p class="" id="title" > Trouvez un refuge</p>
+            <div class="form-container">
+                <form action="get">
+                    <div class="row">
+                        <div class="col">
+                            <label>Nom</label>
+                            <input type="text" name="search-nom" class="form-control">
+                        </div>
+                        <div class="col">
+                            <label>Code postal</label>
+                            <input type="text" name="search-codep" class="form-control" pattern="[0-9]{0,5}">
+                        </div>
+
+
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col text-lg-end">
+
+                            <button type="submit" class="btn btn-primary  classic-submit ">Rechercher</button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <br>
+            <div class="fiche-container flex-scroller">
+                <?php
+                require_once("./classes/__init__.php");
+                    foreach(DB::$db->query("SELECT * FROM refuge")->fetchAll() as $ref){
+                        echo '
+                           <a href="">
+                                <div class="card" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">'.$ref["r_nom"].'</h5>
+                                        <h6 class="card-subtitle mb-2 text-muted">'
+                                            .$ref["r_adresse"]
+                                            .' '.$ref["r_localite"]
+                                            .' '.$ref["r_code_postal"]
+                                            .'</h6>
+                                        <!--<p class="card-text">S of the card\'s content.</p>
+                                        <a href="#" class="card-link">Card link</a>
+                                        <a href="#" class="card-link">Another link</a>-->
+                                        <br>
+                                    </div>
+                                </div>
+                            </a> ';
+                    }
+                ?>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 
 <?php
-
-if(isset($resultats)){
-
-    foreach($resultats as $resultat):
-        echo '<p>'.$resultat["r_nom"].''.$resultat["r_adresse"].'</p>';
-    endforeach;
-}
-?>
-
-<?php
-// tu peux importer le pied de page tout prêt que j'ai fait
 require("./global-includes/footer.html");
 ?>
 
+<!-- Jquery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<!-- Popper and Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+
+
+
 </body>
 </html>
-
-
-<?php
-require_once("../classes/__init__.php");
-session_start();
-
-
-// nom de vue passée via GET devient celle par défaut
-if(isset($_GET["view"])){
-    $_SESSION["view"] = $_GET["view"];
-}else{
-    $_SESSION["view"] = "infos";
-}
-
-$refuge = null;
-if(isset($_GET["idref"])){
-    $refuge = Refuge::get_refuge_data_by_id($_GET["idref"]);
-}else{
-    header("location: accueil.php");
-}
-
-
-// nécessaire pour la pagination
-if(!isset($_GET["page"])){
-    $_GET["page"] = 0;
-}
-
-if(!isset($_GET["act"])){
-    $_GET["act"] = "search";
-}
-
-// nombre d'entrées par requêtes
-$offset_page = 10;
-$curr_url = $_SERVER["REQUEST_URI"];
-$base_url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH) . "?";
-//echo $base_url.'<br>';
-$row_count = 0;
-// on vérifie que le personnel à bien accès à la fiche du refuge
-$user = $_SESSION["user"];
-if(!$user->exerce_in_refuge($refuge->data["r_id"])){
-    header("location: accueil.php");
-}
-?>

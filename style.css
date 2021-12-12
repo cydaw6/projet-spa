@@ -163,7 +163,6 @@ body{
 .orange{
     color: var(--main-orange);
 }
-
 .footer-flex ul{
     overflow: hidden;
     position: relative;
@@ -176,7 +175,9 @@ body{
     flex-wrap: wrap;
     text-align: left;
 }
-
+html {
+    scrollbar-width: none;
+}
 .footer-flex ul > * {
     margin-right: 60px;
 }
