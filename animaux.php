@@ -29,10 +29,7 @@
 require_once("./classes/__init__.php");
 require_once("./global-includes/header.php");
 
-$refs = Refuge::search_refuges(
-    ($_GET["nom"] ?? ""),
-    ($_GET["code"] ?? "")
-);
+$refs = Animal::search_animaux();
 
 
 ?>
@@ -52,7 +49,7 @@ $refs = Refuge::search_refuges(
                             <input type="text" name="nom" class="form-control">
                         </div>
                         <div class="col">
-                            <label>Code postal</label>
+                            <label>Espèce</label>
                             <input type="text" name="code" class="form-control" pattern="[0-9]{0,5}">
                         </div>
 
@@ -70,29 +67,25 @@ $refs = Refuge::search_refuges(
             </div>
             <br>
             <div class="fiche-container flex-scroller">
+
+
+
                 <?php
 
-                    foreach($refs as $ref){
-                        echo '
-                           <a href="" class="ref-link">
-                                <div class="card" style="width: 18rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">'.$ref["r_nom"].'</h5>
-                                        <p class="card-subtitle mb-2 text-muted">'
-                                            .$ref["r_adresse"]
-                                            .' '.$ref["r_localite"]
-                                            .' '.$ref["r_code_postal"]
-                                            .'</p>
-                                        <span class="">'.trim(strrev(chunk_split(strrev($ref["r_tel"]), 2, ' '))).'</span>
-                                        <!--<p class="card-text">S of the card\'s content.</p>
-                                        <a href="#" class="card-link">Card link</a>
-                                        
-                                        <a href="#" class="card-link">Another link</a>-->
-                                        <br>
-                                    </div>
+                foreach($refs as $a){
+                    echo '
+                           <a class="ref-link">
+                                <div class="card card-animal" style="width: 18rem;">
+                                  <img src="" class="card-img-top" alt="">
+                                  <div class="card-body">
+                                    <p class="card-text text-lg-center">
+                                    '.$a["a_nom"].'
+                                    
+                                    </p>
+                                  </div>
                                 </div>
                             </a> ';
-                    }
+                }
                 ?>
             </div>
         </div>
@@ -112,8 +105,30 @@ require("./global-includes/footer.html");
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
+<script>
+    window.onload = function() {
 
+        let images = document.getElementsByClassName('card-animal');
+
+        for(let i = 0; i < images.length; i++) (async function(childNode1) {
+            if(childNode1) {
+                console.log("hey");
+                const response = await fetch('https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=1');
+                const names = await response.json();
+                childNode1.src = names[0].url;
+            }
+        })(images[i].childNodes[1]);
+    };
+
+
+
+
+
+    /*
+*/
+</script>
 
 
 </body>
+
 </html>

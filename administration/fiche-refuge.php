@@ -56,8 +56,8 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
 
         <!-- custom css -->
 
-        <link href="../style.css" rel="stylesheet">
-        <link href="./style.css" rel="stylesheet">
+        <link href="../main-style.css" rel="stylesheet">
+        <link href="admin-style.css" rel="stylesheet">
         <title>SPA - <?php echo $refuge->data["r_nom"]; ?> </title>
 
     </head>

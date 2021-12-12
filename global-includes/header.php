@@ -27,7 +27,7 @@ const ROOT = "/";
                             <a class="nav-link"  <?php echo 'href="'.ROOT.'./refuges.php"'; ?>>Refuges</a>
                         </li>
                         <li class="nav-item brd-right">
-                            <a class="nav-link"  <?php echo 'href="'.ROOT.'./refuges.php"'; ?>>Animaux</a>
+                            <a class="nav-link"  <?php echo 'href="'.ROOT.'./animaux.php"'; ?>>Animaux</a>
                         </li>
                         <li class="nav-item  brd-right">
 

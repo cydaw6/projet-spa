@@ -144,7 +144,6 @@ body{
     padding: 4em 0 4em 0;
 }
 
-/* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
 @media screen and (max-width: 600px) {
     .animals-count{
         font-size: 2em;
@@ -175,9 +174,9 @@ body{
     flex-wrap: wrap;
     text-align: left;
 }
-html {
+/*html {
     scrollbar-width: none;
-}
+}*/
 .footer-flex ul > * {
     margin-right: 60px;
 }

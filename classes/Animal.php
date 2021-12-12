@@ -92,4 +92,8 @@ class Animal{
         return DB::$db->query("SELECT * FROM particulier ORDER BY pa_nom, pa_adresse");
     }
 
+    public static function search_animaux(){
+        return DB::$db->query("SELECT * FROM animal ORDER BY a_nom")->fetchAll();
+    }
+
 }

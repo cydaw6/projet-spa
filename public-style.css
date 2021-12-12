@@ -1,0 +1,44 @@
+.main-view{
+    /*background-color: var(--main-beige);*/
+}
+
+.flex-scroller{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.card{
+    margin: 1em;
+    border-radius: 7px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    justify-content: stretch;
+}
+
+.card:hover{
+    background-color: antiquewhite;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    color:black;
+}
+.form-container{
+    border-radius: 7px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 1em;
+
+}
+
+@media screen and (max-width: 600px){
+    .flex-scroller{
+        align-items: center;
+        justify-content: center;
+
+    }
+}
