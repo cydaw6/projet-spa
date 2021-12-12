@@ -50,7 +50,7 @@ $refs = Animal::search_animaux();
                         </div>
                         <div class="col">
                             <label>Espèce</label>
-                            <input type="text" name="code" class="form-control" pattern="[0-9]{0,5}">
+                            <input type="text" name="code" class="form-control">
                         </div>
 
 
