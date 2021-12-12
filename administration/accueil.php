@@ -41,7 +41,7 @@ session_start();
                             // boucle sur les refuges ou l'utilisateur à une fonction
                             foreach($refuges as $r){
                                 echo '
-                                    <a href="fiche-refuges.php?idref='. $r["r_id"].'">
+                                    <a href="fiche-refuge.php?idref='. $r["r_id"].'">
                                         <div class="refuge-card">
                                             <p>'.$r["r_nom"].'</p>
                                         </div>
