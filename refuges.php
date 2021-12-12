@@ -60,7 +60,15 @@
 <body>
 
 <?php
+require_once("./classes/__init__.php");
 require_once("./global-includes/header.php");
+
+$refs = Refuge::search_refuges(
+    ($_GET["nom"] ?? ""),
+    ($_GET["code"] ?? "")
+);
+
+
 ?>
 
 <div class="main">
@@ -71,15 +79,15 @@ require_once("./global-includes/header.php");
             <br><br>
             <p class="" id="title" > Trouvez un refuge</p>
             <div class="form-container">
-                <form action="get">
+                <form method="get" >
                     <div class="row">
                         <div class="col">
                             <label>Nom</label>
-                            <input type="text" name="search-nom" class="form-control">
+                            <input type="text" name="nom" class="form-control">
                         </div>
                         <div class="col">
                             <label>Code postal</label>
-                            <input type="text" name="search-codep" class="form-control" pattern="[0-9]{0,5}">
+                            <input type="text" name="code" class="form-control" pattern="[0-9]{0,5}">
                         </div>
 
 
@@ -87,9 +95,7 @@ require_once("./global-includes/header.php");
                     <br>
                     <div class="row">
                         <div class="col text-lg-end">
-
-                            <button type="submit" class="btn btn-primary  classic-submit ">Rechercher</button>
-
+                            <button type="submit" name="send-search" class="btn btn-primary  classic-submit ">Rechercher</button>
                         </div>
 
                     </div>
@@ -99,20 +105,22 @@ require_once("./global-includes/header.php");
             <br>
             <div class="fiche-container flex-scroller">
                 <?php
-                require_once("./classes/__init__.php");
-                    foreach(DB::$db->query("SELECT * FROM refuge")->fetchAll() as $ref){
+
+                    foreach($refs as $ref){
                         echo '
                            <a href="">
                                 <div class="card" style="width: 18rem;">
                                     <div class="card-body">
                                         <h5 class="card-title">'.$ref["r_nom"].'</h5>
-                                        <h6 class="card-subtitle mb-2 text-muted">'
+                                        <p class="card-subtitle mb-2 text-muted">'
                                             .$ref["r_adresse"]
                                             .' '.$ref["r_localite"]
                                             .' '.$ref["r_code_postal"]
-                                            .'</h6>
+                                            .'</p>
+                                        <span class="">'.trim(strrev(chunk_split(strrev($ref["r_tel"]), 2, ' '))).'</span>
                                         <!--<p class="card-text">S of the card\'s content.</p>
                                         <a href="#" class="card-link">Card link</a>
+                                        
                                         <a href="#" class="card-link">Another link</a>-->
                                         <br>
                                     </div>

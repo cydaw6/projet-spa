@@ -24,10 +24,10 @@ const ROOT = "/";
                             <a class="nav-link active" aria-current="page" <?php echo 'href="'.ROOT.'"'; ?>>Accueil</a>
                         </li>
                         <li class="nav-item brd-right">
-                            <a class="nav-link"  <?php echo 'href="'.ROOT.'./refuge.php"'; ?>>Refuges</a>
+                            <a class="nav-link"  <?php echo 'href="'.ROOT.'./refuges.php"'; ?>>Refuges</a>
                         </li>
                         <li class="nav-item brd-right">
-                            <a class="nav-link"  <?php echo 'href="'.ROOT.'./refuge.php"'; ?>>Animaux</a>
+                            <a class="nav-link"  <?php echo 'href="'.ROOT.'./refuges.php"'; ?>>Animaux</a>
                         </li>
                         <li class="nav-item  brd-right">
 
@@ -48,7 +48,8 @@ const ROOT = "/";
                     </ul>
                 </div>
                 <?php
-                    if(isset($_SESSION["user"])){
+
+                    if(isset($_SESSION["user"]) && basename($_SERVER['PHP_SELF']) != "login.php"){
                         echo '<a href=""><p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<i class="fas fa-user"></i></p></a>';
                     }
 

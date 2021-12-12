@@ -182,6 +182,12 @@ class Refuge{
         return $cnx->execute(array($id_orig, $id_animal, $id_dest));
     }
 
+    public static function search_refuges($nom, $dep){
+        $cnx = DB::$db->prepare("SELECT * FROM refuge WHERE UPPER(r_nom) LIKE '%' || UPPER(?) || '%' AND r_code_postal LIKE ? || '%' ");
+        $cnx->execute(array($nom, $dep));
+        return $cnx->fetchAll();
+    }
+
     public static function get_all_refuge(){
         $cnx = DB::$db->query("SELECT * FROM refuge ORDER BY r_nom");
         return $cnx->fetchAll();
