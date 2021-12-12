@@ -2,24 +2,21 @@
 require_once("../classes/__init__.php");
 session_start();
 
+
 // nom de vue passée via GET devient celle par défaut
 if(isset($_GET["view"])){
     $_SESSION["view"] = $_GET["view"];
-}
-
-// vue par défaut
-if(!isset($_SESSION["view"])){
-    $_SESSION["view"] = "animaux";
+}else{
+    $_SESSION["view"] = "infos";
 }
 
 $refuge = null;
 if(isset($_GET["idref"])){
     $refuge = Refuge::get_refuge_data_by_id($_GET["idref"]);
+}else{
+    header("location: accueil.php");
 }
 
-if(!isset($refuge)){
-    echo "erreur";
-}
 
 // nécessaire pour la pagination
 if(!isset($_GET["page"])){
@@ -69,14 +66,28 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
     <?php
     require_once("../global-includes/header.php");
     ?>
+
     <div class="main">
         <!-- infos -->
 
         <div class="container-fluid section-fiche">
                 <div class="container">
+                    <?php
+                    if($_SESSION["view"] == "infos"){
+                        echo '
+                            <span class="page-btn">
+                                <a href="./accueil.php" class="add">
+                                    <i class="fas fa-arrow-left fa-2x left"></i>
+                                </a>
+                            </span>
+                        
+                        ';
+                    }
+                    ?>
+                    <br><br>
                         <p class="" id="title" > <?php echo $refuge->data["r_nom"]; ?> </p>
                         <div class="fiche-container">
-                            <br>
+
                             <div id="nav-onglet" >
                                 <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=infos">
                                     <div class="nav-a <?php echo ($_SESSION["view"] === "infos") ? "nav-a-select" : ""; ?>" >

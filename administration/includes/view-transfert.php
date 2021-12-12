@@ -3,7 +3,7 @@ $view_name = "transfert";
 ?>
 
 
-<p style="color: white;">Effectuer un transfert</p>
+<p style="color: var(--main-orange);">Effectuer un transfert</p>
 
 
 <br>

@@ -28,7 +28,7 @@ const ROOT = "/";
                             <a class="nav-link" aria-current="page" <?php echo 'href="'.ROOT.'administration/login.php"'; ?> >Connexion</a>
                         </li>
                         <li class="nav-item brd-right">
-                            <a class="nav-link"  <?php echo 'href="'.ROOT.'administration/accueil.php"'; ?>>Refuges</a>
+                            <a class="nav-link"  <?php echo 'href="'.ROOT.'./refuge.php"'; ?>>Refuges</a>
                         </li>
                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

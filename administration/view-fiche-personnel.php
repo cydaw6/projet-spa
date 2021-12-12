@@ -105,72 +105,72 @@ echo '
         <p class=""> <b>Dernier refuge: </b>'.$lrefuge["r_nom"].'</p>
         <p class=""> <b>Adoption: </b>'.$adoption;
 
-        if($adoption === '' && $animal->data["a_date_deces"] == ''){
-            ?>
-            <form method="post">
-                <div class="row">
-                    <div class="col-4">
-                        <select name="p-exists-id" id="p-exists" class="selectpicker show-tick form-control " onchange="getval(this);" required data-live-search="true">
+if($adoption === '' && $animal->data["a_date_deces"] == ''){
+    ?>
+    <form method="post">
+        <div class="row">
+            <div class="col-4">
+                <select name="p-exists-id" id="p-exists" class="selectpicker show-tick form-control " onchange="getval(this);" required data-live-search="true">
 
-                            <?php
-                            $exerce_fc = DB::$db->query("SELECT * from exerce WHERE r_id = ".$refuge->data["r_id"])->fetchAll();
-                            foreach( Animal::get_particuliers() as  $row){
-                                echo '<option class="op-personnel" value="'.$row["pa_id"].'" fnct-ref="'.$fnct.'">'.$row["pa_nom"]
-                                    .'&nbsp;&nbsp;('
-                                    .$row["pa_adresse"] . ', '.$row["pa_localite"] . ' '.$row["pa_code_postal"]
-                                    .')'.'
+                    <?php
+                    $exerce_fc = DB::$db->query("SELECT * from exerce WHERE r_id = ".$refuge->data["r_id"])->fetchAll();
+                    foreach( Animal::get_particuliers() as  $row){
+                        echo '<option class="op-personnel" value="'.$row["pa_id"].'" fnct-ref="'.$fnct.'">'.$row["pa_nom"]
+                            .'&nbsp;&nbsp;('
+                            .$row["pa_adresse"] . ', '.$row["pa_localite"] . ' '.$row["pa_code_postal"]
+                            .')'.'
                                     </option>';
-                                // . ' - '.trim(strrev(chunk_split(strrev($row["pa_tel"]),2, ' '))).'
-                            }
-                            ?>
-                        </select>
-                        <div class="col-4-">
-                            <input type="hidden" name="idref" value="<?php echo $_GET["idref"]; ?>">
-                            <input type="hidden" name="view" value="<?php echo $view_name; ?>">
-                            <input type="hidden" name="page" value="0">
-                            <br>
-                            <button type="submit" class="btn btn-info" name="set-adoption">Valider</button>
-                            <a href="<?php echo $url_add_particulier;?>" ><button type="button" class="btn btn-secondary">Nouveau particulier</button></a>
-                        </div>
-                    </div>
-            </form>
-            <br><br>
-            <?php
-
-        }
-
-        echo '</p>';
-
-        if($adoption  || $deces ){
-            echo ' <p class=""> <b>Date de décès: </b>'.$deces.'</p>';
-        }else{
-
-        ?>
-            <p>
-            <form method="post">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="col-4-">
-                            <input type="hidden" name="idref" value="<?php echo $_GET["idref"]; ?>">
-                            <input type="hidden" name="view" value="<?php echo $view_name; ?>">
-                            <input type="hidden" name="page" value="0">
-                            <br>
-                            <button type="submit" class="btn btn-info" name="set-deces" style="background-color: var(--main-warn-orange);">Décès de l'animal</button>
-                        </div>
-                    </div>
+                        // . ' - '.trim(strrev(chunk_split(strrev($row["pa_tel"]),2, ' '))).'
+                    }
+                    ?>
+                </select>
+                <div class="col-4-">
+                    <input type="hidden" name="idref" value="<?php echo $_GET["idref"]; ?>">
+                    <input type="hidden" name="view" value="<?php echo $view_name; ?>">
+                    <input type="hidden" name="page" value="0">
+                    <br>
+                    <button type="submit" class="btn btn-info" name="set-adoption">Valider</button>
+                    <a href="<?php echo $url_add_particulier;?>" ><button type="button" class="btn btn-secondary">Nouveau particulier</button></a>
                 </div>
-            </form>
-            </p>
-                    <br><br>
-                <?php
-        }
+            </div>
+    </form>
+    <br><br>
+    <?php
+
+}
+
+echo '</p>';
+
+if($adoption  || $deces ){
+    echo ' <p class=""> <b>Date de décès: </b>'.$deces.'</p>';
+}else{
+
+    ?>
+    <p>
+    <form method="post">
+        <div class="row">
+            <div class="col-4">
+                <div class="col-4-">
+                    <input type="hidden" name="idref" value="<?php echo $_GET["idref"]; ?>">
+                    <input type="hidden" name="view" value="<?php echo $view_name; ?>">
+                    <input type="hidden" name="page" value="0">
+                    <br>
+                    <button type="submit" class="btn btn-info" name="set-deces" style="background-color: var(--main-warn-orange);">Décès de l'animal</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    </p>
+    <br><br>
+    <?php
+}
 
 
 
 
 
 
-    echo '    
+echo '    
         </div>
     </div>
     <br>
@@ -182,4 +182,3 @@ echo '
 ';
 
 ?>
-

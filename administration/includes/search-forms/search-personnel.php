@@ -3,7 +3,7 @@
     <div class="row">
 
         <div class="col">
-            <label for="nom">Nom Complet</label>
+            <label for="nom">Nom</label>
             <input type="text" class="form-control" name="nom" id="nom" placeholder=""><br>
         </div>
         <div class="col">
