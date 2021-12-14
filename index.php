@@ -46,9 +46,9 @@
                           donnons-leur autant qu’ils nous apportent !
                       </p>
                       <br>
-                      <button type="button" class="btn btn-light">Je donne</button>
-                      <button type="button" class="btn btn-light">J'adopte</button>
-                      <button type="button" class="btn btn-light">Je découvre</button>
+                      <a href="./animaux.php"><button type="button" class="btn btn-light">J'adopte</button></a>
+                      <!--<button type="button" class="btn btn-light">J'adopte</button>
+                      <button type="button" class="btn btn-light">Je découvre</button>-->
                   </div>
 
               </div>

@@ -29,10 +29,23 @@ const ROOT = "/";
                         <li class="nav-item brd-right">
                             <a class="nav-link"  <?php echo 'href="'.ROOT.'./animaux.php"'; ?>>Animaux</a>
                         </li>
-                        <li class="nav-item  brd-right">
+                        <?php
+                            if(isset($_SESSION["user"])){
+                                echo '
+                                    <li class="nav-item  brd-right">
+                                        <a class="nav-link" aria-current="page" href="'.ROOT.'./administration/deconnexion.php">Déconnexion</a>
+                                    </li>
+                                ';
+                            }else{
+                                echo '
+                                    <li class="nav-item  brd-right">
+                                        <a class="nav-link" aria-current="page" href="'.ROOT.'administration/login.php">Connexion</a>
+                                    </li>
+                                ';
+                            }
+                        ?>
 
-                            <a class="nav-link" aria-current="page" <?php echo 'href="'.ROOT.'administration/login.php"'; ?> >Connexion</a>
-                        </li>
+
 
                        <!-- <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,7 +63,7 @@ const ROOT = "/";
                 <?php
 
                     if(isset($_SESSION["user"]) && basename($_SERVER['PHP_SELF']) != "login.php"){
-                        echo '<a href=""><p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<i class="fas fa-user"></i></p></a>';
+                        echo '<a ><p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<i class="fas fa-user"></i></p></a>';
                     }
 
                 ?>

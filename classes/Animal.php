@@ -99,8 +99,8 @@ class Animal{
                                 JOIN espece e ON e.e_id = a.e_id 
                                 WHERE a.a_date_deces IS NULL
                                 AND a.a_date_adoption IS NULL
-                                ".(count($idr) ? "AND dr.r_id IN (".implode(",", $idr).")": "")."
-                                ".(count($espece) ? "AND a.e_id IN (".implode(",", $espece).")": "")."
+                                ".(count($idr) ? "AND dr.r_id IN (".sanitize(implode(",", $idr)).")": "")."
+                                ".(count($espece) ? "AND a.e_id IN (".sanitize(implode(",", $espece)).")": "")."
                                 AND a.a_sexe LIKE '%' || ? || '%'
                                 AND UPPER(a.a_nom) LIKE UPPER(?) || '%'
                                 ORDER BY dr.a_nom

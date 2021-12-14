@@ -14,7 +14,7 @@ $view_name = "soins";
             <span class="page-btn">
                            
 
-                <a href="./fiche-brouillon.php?idref='.$_GET["idref"] .'&view=vaccins" class="add"> 
+                <a href="./fiche-refuge.php?idref='.$_GET["idref"] .'&view=vaccins" class="add"> 
                 
                     <i class="fas fa-syringe fa-2x left"></i>  &nbsp; Prochain vaccins
                 </a>
@@ -27,7 +27,7 @@ $view_name = "soins";
             $cpyget["act"] = "add";
             echo '
             <span class="page-btn">
-                <a href="./fiche-brouillon.php?idref='.$_GET["idref"] .'&view=vaccins" class="add"> 
+                <a href="./fiche-refuge.php?idref='.$_GET["idref"] .'&view=vaccins" class="add"> 
                     <i class="fas fa-syringe fa-2x left"></i>  &nbsp; Prochain vaccins
                 </a>
                 <a href="'. $base_url.http_build_query($cpyget).'" class="add"> 
