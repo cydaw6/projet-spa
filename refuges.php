@@ -74,7 +74,7 @@ $refs = Refuge::search_refuges(
 
                     foreach($refs as $ref){
                         echo '
-                           <a href="" class="ref-link">
+                           <a href="./animaux.php?refuge[]='.$ref["r_id"].'" class="ref-link">
                                 <div class="card" style="width: 18rem;">
                                     <div class="card-body">
                                         <h5 class="card-title">'.$ref["r_nom"].'</h5>

@@ -18,7 +18,8 @@
 
 
 
-    let data = <?php  echo json_encode(array_values($refs), JSON_HEX_TAG); ?>;
+    let data = <?php  echo json_encode(array_values($animaux), JSON_HEX_TAG); ?>;
+    console.log(data.length);
     let index = 0;
     let increment = 10;
     async function plus(){
@@ -32,7 +33,7 @@
         for(; i < index+increment; i++){
             let elem = data[i];
             let esp = await get_photo(elem["e_nom"]);
-            scroller.innerHTML += `<a class="ref-link" espece="${elem["e_nom"]}">
+            scroller.innerHTML += `<a href="" class="ref-link" espece="${elem["e_nom"]}">
                                         <div class="card card-animal" style="width: 18rem;">
                                           <img src="${esp}" class="card-img-top" alt="">
                                           <div class="card-body">

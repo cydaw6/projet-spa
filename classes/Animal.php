@@ -92,8 +92,21 @@ class Animal{
         return DB::$db->query("SELECT * FROM particulier ORDER BY pa_nom, pa_adresse");
     }
 
-    public static function search_animaux(){
-        return DB::$db->query("SELECT * FROM animal NATURAL JOIN espece ORDER BY a_nom")->fetchAll();
+    public static function search_animaux($idr, $anom, $espece, $sexe){
+        $cnx = DB::$db->prepare("SELECT * 
+                                FROM dernier_refuge dr
+                                JOIN animal a ON a.a_id = dr.a_id
+                                JOIN espece e ON e.e_id = a.e_id 
+                                WHERE a.a_date_deces IS NULL
+                                AND a.a_date_adoption IS NULL
+                                ".(count($idr) ? "AND dr.r_id IN (".implode(",", $idr).")": "")."
+                                ".(count($espece) ? "AND a.e_id IN (".implode(",", $espece).")": "")."
+                                AND a.a_sexe LIKE '%' || ? || '%'
+                                AND UPPER(a.a_nom) LIKE UPPER(?) || '%'
+                                ORDER BY dr.a_nom
+        ");
+        $cnx->execute(array($sexe, $anom));
+        return $cnx->fetchAll();
     }
 
 }

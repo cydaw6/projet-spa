@@ -29,8 +29,14 @@
 require_once("./classes/__init__.php");
 require_once("./global-includes/header.php");
 
-$refs = Animal::search_animaux();
+$animaux = array();
 
+$animaux = Animal::search_animaux(
+    ($_GET["refuge"] ?? array()),
+    ($_GET["nom"] ?? ""),
+    ($_GET["espece"] ?? array()),
+    ($_GET["sexe"] ?? "")
+);
 
 ?>
 
@@ -45,33 +51,53 @@ $refs = Animal::search_animaux();
                 <form method="get" >
                     <div class="row">
                         <div class="col">
-                            <label>Nom</label>
-                            <input type="text" name="nom" class="form-control">
+                            <label for="nom">Nom</label>
+                            <input type="text" name="nom" id="nom" class="form-control">
                         </div>
                         <div class="col">
-                            <label>Espèce</label>
-                            <input type="text" name="code" class="form-control">
+                            <label for="espece">Espece</label>
+                            <select class="selectpicker show-tick form-control" name="espece[]" id="espece" multiple>
+                                <?php
+                                foreach (Animal::get_especes() as $row) {
+                                    echo '<option value="' . $row["e_id"] . '">' . $row["e_nom"] . '</option>';
+                                }
+                                ?>
+                            </select>
                         </div>
+
                         <div class="col">
                             <label for="sexe">Sexe</label>
-                            <select class="form-control" name="sexe" id="sexe">
+                            <select name="sexe" id="sexe" class="selectpicker show-tick form-control ">
+                                <option value="" selected>Indifférent</option>
                                 <option value="M">Mâle</option>
                                 <option value="F">Femelle</option>
                             </select>
                         </div>
-                    </div>
                     <br>
                     <div class="row">
+                        <div class="col-md-4">
+                            <label for="refuge">Refuge</label>
+                            <select class="selectpicker show-tick form-control" name="refuge[]" id="refuge" multiple data-live-search="true"
+                                <?php
+                                foreach (Refuge::get_all_refuge() as $row) {
+                                    echo '<option value="' . $row["r_id"] . '">' . $row["r_nom"] . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+
                         <div class="col text-lg-end">
+                            <br>
                             <button type="submit" name="send-search" class="btn btn-primary  classic-submit ">Rechercher</button>
                         </div>
+                    </div>
                     </div>
                 </form>
             </div>
             <br>
             <div class="fiche-container flex-scroller" id="a-scroller">
                 <?php
-                /*foreach($refs as $a){
+                /*foreach($animaux as $a){
                     echo '
                            <a class="ref-link" style="display: none;" espece="'.$a["e_nom"].'">
                                 <div class="card card-animal" style="width: 18rem;">
@@ -86,8 +112,6 @@ $refs = Animal::search_animaux();
                             </a> ';
                 }
                 */?>
-
-
             </div>
             <div class="row" style="margin: 1em; text-align: center;">
                 <div class="col ">
@@ -111,6 +135,16 @@ require("./global-includes/footer.html");
 <!-- Popper and Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+<!-- Bootstrap multiselect Beta -->
+<script src="./assets/lib/bootstrap-select.js"></script>
+
+<!-- Option du multiselect -->
+<script>
+    $.fn.selectpicker.Constructor.DEFAULTS.selectedTextFormat = 'count';
+    $.fn.selectpicker.Constructor.DEFAULTS.noneSelectedText = "0 élément";
+
+</script>
 
 <?php
 
