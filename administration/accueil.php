@@ -19,6 +19,7 @@ session_start();
         <link href="../main-style.css" rel="stylesheet">
         <link href="admin-style.css" rel="stylesheet">
         <title>SPA</title>
+        <link rel="icon" href="../assets/img/favicon.ico"/>
 
     </head>
     <body>
@@ -41,9 +42,13 @@ session_start();
                             // boucle sur les refuges ou l'utilisateur à une fonction
                             foreach($refuges as $r){
                                 echo '
-                                    <a href="fiche-refuge.php?idref='. $r["r_id"].'">
-                                        <div class="refuge-card">
-                                            <p>'.$r["r_nom"].'</p>
+                                    <a href="fiche-refuge.php?idref='. $r["r_id"].'" style="color: black; ">
+                                        
+                                        <div class="refuge-card " >
+                                            <p>
+                                                <img src="../assets/img/home.png" style="max-height: 2rem; margin-top: 0.5em; vertical-align:middle;">
+                                            </p>
+                                            <p class="" style="display: inline-block;">'.$r["r_nom"].'</p>
                                         </div>
                                     </a>
                                 

@@ -53,3 +53,31 @@ a:hover{
     right: 50%;*/
     display: inline-block;
 }
+.add{
+    color: grey;
+}
+.add:hover{
+    color: var(--main-orange)!important;
+}
+
+.fiche-container{
+
+    border-radius: 7px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 1em;
+
+}
+
+
+
+.fiche-container img{
+    max-width: 20vw;
+}
+
+.lib-info{
+    border-bottom: 2px solid rgba(241, 241, 241, 0.65);
+}
+
+.row-info{
+    margin-bottom: 1em;
+}

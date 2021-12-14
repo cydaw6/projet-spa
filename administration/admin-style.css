@@ -38,13 +38,16 @@ a {
 
 }
 .refuge-card{
-    height: 10em;
     width: 10em;
     background-color: white;
     border-radius: 5px;
     margin-right: 1em;
     margin-bottom: 1em;
     transition: 200ms ease-in-out;
+    text-align: center;
+
+    background-repeat: no-repeat;
+    background-position: center;
 
 }
 .refuge-card:hover{

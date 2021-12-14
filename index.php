@@ -14,7 +14,7 @@
       <!-- custom css -->
       <link href="main-style.css" rel="stylesheet">
       <title>SPA - Accueil</title>
-
+      <link rel="icon" href="./assets/img/favicon.ico"/>
   </head>
   <body>
 

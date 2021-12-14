@@ -21,7 +21,7 @@
     <link href="public-style.css" rel="stylesheet">
 
     <title>SPA - Refuges </title>
-
+    <link rel="icon" href="./assets/img/favicon.ico"/>
 </head>
 <body>
 
@@ -40,11 +40,11 @@ $refs = Refuge::search_refuges(
 <div class="main">
     <!-- infos -->
 
-    <div class="container-fluid section-fiche">
+    <div class="container-fluid section-fiche"  style="background-color: var(--main-beige);">
         <div class="container main-view">
             <br><br>
-            <p class="" id="title" > Trouvez un refuge</p>
-            <div class="form-container">
+            <p class="" id="title" > Trouver un refuge</p>
+            <div class="form-container"  style="background-color: white;">
                 <form method="get" >
                     <div class="row">
                         <div class="col">
@@ -69,7 +69,7 @@ $refs = Refuge::search_refuges(
                 </form>
             </div>
             <br>
-            <div class="fiche-container flex-scroller">
+            <div class=" flex-scroller">
                 <?php
 
                     foreach($refs as $ref){

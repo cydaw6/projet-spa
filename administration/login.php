@@ -29,7 +29,7 @@ if (isset($_POST["send"])) {
     <link href="../main-style.css" rel="stylesheet">
     <link href="admin-style.css" rel="stylesheet">
     <title>SPA</title>
-
+    <link rel="icon" href="../assets/img/favicon.ico"/>
 </head>
 <body>
 

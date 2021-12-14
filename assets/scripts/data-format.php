@@ -32,10 +32,10 @@
         let i = index;
         for(; i < index+increment; i++){
             let elem = data[i];
-            let esp = await get_photo(elem["e_nom"]);
-            scroller.innerHTML += `<a href="" class="ref-link" espece="${elem["e_nom"]}">
+            let img = await get_photo(elem["e_nom"]);
+            scroller.innerHTML += `<a href="./animal.php?ida=${elem["a_id"]}&img=${img}" class="ref-link" espece="${elem["e_nom"]}">
                                         <div class="card card-animal" style="width: 18rem;">
-                                          <img src="${esp}" class="card-img-top" alt="">
+                                          <img src="${img}" class="card-img-top" alt="">
                                           <div class="card-body">
                                             <p class="card-text text-lg-center">
                                             ${elem["a_nom"]}

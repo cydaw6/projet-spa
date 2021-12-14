@@ -61,11 +61,9 @@ const ROOT = "/";
                     </ul>
                 </div>
                 <?php
-
                     if(isset($_SESSION["user"]) && basename($_SERVER['PHP_SELF']) != "login.php"){
                         echo '<a ><p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<i class="fas fa-user"></i></p></a>';
                     }
-
                 ?>
             </div>
         </nav>

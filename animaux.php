@@ -21,7 +21,7 @@
     <link href="public-style.css" rel="stylesheet">
 
     <title>SPA - Refuges </title>
-
+    <link rel="icon" href="./assets/img/favicon.ico"/>
 </head>
 <body>
 
@@ -43,10 +43,10 @@ $animaux = Animal::search_animaux(
 <div class="main">
     <!-- infos -->
 
-    <div class="container-fluid section-fiche">
+    <div class="container-fluid section-fiche" >
         <div class="container main-view">
             <br><br>
-            <p class="" id="title" > Trouvez un refuge</p>
+            <p class="" id="title"></p>
             <div class="form-container">
                 <form method="get" >
                     <div class="row">
@@ -95,7 +95,7 @@ $animaux = Animal::search_animaux(
                 </form>
             </div>
             <br>
-            <div class="fiche-container flex-scroller" id="a-scroller">
+            <div class=" flex-scroller" id="a-scroller">
                 <?php
                 /*foreach($animaux as $a){
                     echo '
