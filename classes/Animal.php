@@ -93,7 +93,7 @@ class Animal{
     }
 
     public static function search_animaux(){
-        return DB::$db->query("SELECT * FROM animal ORDER BY a_nom")->fetchAll();
+        return DB::$db->query("SELECT * FROM animal NATURAL JOIN espece ORDER BY a_nom")->fetchAll();
     }
 
 }

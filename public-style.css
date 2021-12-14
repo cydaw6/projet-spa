@@ -42,3 +42,14 @@ a:hover{
 
     }
 }
+
+#plus{
+    border-radius: 20px!important;
+    background-color: var(--main-orange);
+    border-color: var(--main-orange);
+    opacity: 0.85;
+    /*position: absolute;
+    left: 50%;
+    right: 50%;*/
+    display: inline-block;
+}

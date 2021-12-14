@@ -52,29 +52,28 @@ $refs = Animal::search_animaux();
                             <label>Espèce</label>
                             <input type="text" name="code" class="form-control">
                         </div>
-
-
+                        <div class="col">
+                            <label for="sexe">Sexe</label>
+                            <select class="form-control" name="sexe" id="sexe">
+                                <option value="M">Mâle</option>
+                                <option value="F">Femelle</option>
+                            </select>
+                        </div>
                     </div>
                     <br>
                     <div class="row">
                         <div class="col text-lg-end">
                             <button type="submit" name="send-search" class="btn btn-primary  classic-submit ">Rechercher</button>
                         </div>
-
                     </div>
-
                 </form>
             </div>
             <br>
-            <div class="fiche-container flex-scroller">
-
-
-
+            <div class="fiche-container flex-scroller" id="a-scroller">
                 <?php
-
-                foreach($refs as $a){
+                /*foreach($refs as $a){
                     echo '
-                           <a class="ref-link">
+                           <a class="ref-link" style="display: none;" espece="'.$a["e_nom"].'">
                                 <div class="card card-animal" style="width: 18rem;">
                                   <img src="" class="card-img-top" alt="">
                                   <div class="card-body">
@@ -86,7 +85,15 @@ $refs = Animal::search_animaux();
                                 </div>
                             </a> ';
                 }
-                ?>
+                */?>
+
+
+            </div>
+            <div class="row" style="margin: 1em; text-align: center;">
+                <div class="col ">
+                    <div type="button" id="plus"  onclick="plus();" class="btn btn-primary" style=""> <i class="fas fa-chevron-down"></i></div>
+
+                </div>
             </div>
         </div>
 
@@ -105,28 +112,11 @@ require("./global-includes/footer.html");
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 
-<script>
-    window.onload = function() {
+<?php
 
-        let images = document.getElementsByClassName('card-animal');
+require_once("./assets/scripts/data-format.php");
 
-        for(let i = 0; i < images.length; i++) (async function(childNode1) {
-            if(childNode1) {
-                console.log("hey");
-                const response = await fetch('https://api.thedogapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&page=0&limit=1');
-                const names = await response.json();
-                childNode1.src = names[0].url;
-            }
-        })(images[i].childNodes[1]);
-    };
-
-
-
-
-
-    /*
-*/
-</script>
+?>
 
 
 </body>
