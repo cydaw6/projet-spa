@@ -32,6 +32,9 @@ const ROOT = "/";
                         <?php
                             if(isset($_SESSION["user"])){
                                 echo '
+                                     <li class="nav-item  brd-right">
+                                        <a class="nav-link" aria-current="page" href="'.ROOT.'./administration/accueil.php">Mes refuges</a>
+                                    </li>
                                     <li class="nav-item  brd-right">
                                         <a class="nav-link" aria-current="page" href="'.ROOT.'./administration/deconnexion.php">Déconnexion</a>
                                     </li>
@@ -62,7 +65,8 @@ const ROOT = "/";
                 </div>
                 <?php
                     if(isset($_SESSION["user"]) && basename($_SERVER['PHP_SELF']) != "login.php"){
-                        echo '<a ><p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<i class="fas fa-user"></i></p></a>';
+                        $refuges = $_SESSION["user"]->get_refuges();
+                        echo '<a href="'.ROOT.'administration/fiche-refuge.php?idref='. $refuges[0]["r_id"].'&view=info-p&idp='.$_SESSION["user"]->data["p_id"].'"><p id="nav-username">'.$_SESSION["user"]->data["p_prenom"].' '.$_SESSION["user"]->data["p_nom"].'&nbsp;&nbsp;<i class="fas fa-user"></i></p></a>';
                     }
                 ?>
             </div>

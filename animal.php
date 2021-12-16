@@ -108,6 +108,14 @@ $data = $animal->get_all_data();
                                 <?php echo $data["a_date_naissance"]; ?>
                             </div>
                         </div>
+                        <div class="row row-info">
+                            <div class="col lib-info">
+                                Refuge
+                            </div>
+                            <div class="col">
+                                <?php echo $animal->get_refuge()["r_nom"]; ?>
+                            </div>
+                        </div>
 
                     </div>
 

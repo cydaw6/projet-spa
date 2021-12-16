@@ -70,7 +70,7 @@ if(isset($_POST["add-send"])) {
                         <label for="espece">Espece</label>
                         <select name="espece" id="espece" class="form-control selectpicker" required>
                             <?php
-                            foreach(Animal::get_especes() as  $row){
+                            foreach(DB::get_especes() as $row){
                                 echo '<option value="'.$row["e_id"].'">'.$row["e_nom"].'</option>';
                             }
                             ?>
@@ -82,7 +82,7 @@ if(isset($_POST["add-send"])) {
                             <option class="fnct-choice" value="aucune">Aucune</option>
 
                             <?php
-                            foreach(Animal::get_fourrieres() as $row){
+                            foreach(DB::get_fourrieres() as $row){
                                 echo '<option class="fnct-choice" value="'.$row["f_id"].'">'.$row["f_localite"].', <b>'.$row["f_adresse"].'</b></option>';
                             }
                             ?>

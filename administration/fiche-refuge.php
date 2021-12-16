@@ -84,11 +84,19 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                         
                         ';
                     }
+
                     ?>
                     <br><br>
-                        <p class="" id="title" > <?php echo $refuge->data["r_nom"]; ?> </p>
+                    <?php
+                    $test_info_p = ($_SESSION["view"] == "info-p" && (isset($_GET["idp"]) && $_GET["idp"] == $_SESSION["user"]->data["p_id"]));
+                    if(!$test_info_p){
+                        echo '<p class="" id="title" > '.$refuge->data["r_nom"].'</p>';
+                    }
+                    ?>
                         <div class="fiche-container">
-
+                            <?php
+                            if(!$test_info_p){
+                            ?>
                             <div id="nav-onglet" >
                                 <a href="./fiche-refuge.php?idref=<?php echo $_GET["idref"]; ?>&view=infos">
                                     <div class="nav-a <?php echo ($_SESSION["view"] === "infos") ? "nav-a-select" : ""; ?>" >
@@ -115,11 +123,10 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                         <p>&nbsp;&nbsp;Soins&nbsp;&nbsp;</p>
                                     </div>
                                 </a>
-
-                            <?php 
-
-                            ?>
                             </div>
+                            <?php
+                            }
+                            ?>
 
                             <div class="container-fluid form-onglet">
                                 <?php
@@ -145,6 +152,10 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                     }elseif($_SESSION["view"] === "fa"){
                                         if(isset($_GET["aid"])){
                                             include("includes/view-fiche-animal.php");
+                                        }
+                                    }elseif($_SESSION["view"] === "info-p"){
+                                        if(isset($_GET["idp"])){
+                                            include("includes/view-fiche-personnel.php");
                                         }
                                     }
 

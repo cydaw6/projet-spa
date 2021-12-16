@@ -21,23 +21,17 @@ class Animal{
      * les jointures des tables associés
      */
     public function get_all_data(){
-        $cnx = DB::$db->prepare("SELECT * 
+        $cnx = DB::$db->prepare("SELECT *, dr.r_id dernier_refuge
                                     FROM animal a 
                                     JOIN espece e ON a.e_id = e.e_id 
                                     LEFT JOIN fourriere f ON f.f_id = a.f_id 
                                     LEFT JOIN refuge r ON r.r_id = a.r_id
                                     LEFT JOIN particulier pa ON pa.pa_id = a.pa_id 
+                                    JOIN dernier_refuge dr on a.a_id = dr.a_id
                                     WHERE a.a_id = ?
         ");
         $cnx->execute(array($this->data["a_id"]));
         return $cnx->fetch();
-    }
-
-    /**
-     * renvoie l'espèce de l'animal
-     */
-    public static function get_especes(){
-       return DB::$db->query("SELECT * FROM espece")->fetchAll();
     }
 
     /**
@@ -48,31 +42,6 @@ class Animal{
         $cnx = DB::$db->prepare("SELECT * FROM dernier_refuge dr JOIN refuge r ON r.r_id = dr.r_id WHERE dr.a_id = ?");
         $cnx->execute(array($this->data["a_id"]));
         return $cnx->fetch();
-    }
-
-    /**
-     * Renvoie tous les vaccins
-     */
-    public static function get_vaccins()
-    {
-       return DB::$db->query("SELECT * FROM vaccin ORDER BY v_nom")->fetchAll();
-    }
-
-    /**
-     * Renvoie tous les vaccins par espece
-     */
-    public static function get_vaccins_by_espece()
-    {
-        //return DB::$db->query("SELECT * FROM vaccin natural join espece ORDER BY v_nom, e_nom")->fetchAll();
-        return array();
-    }
-
-    /**
-     * Renvoie toutes les fourrière dans tableau
-     * @return mixed
-     */
-    public static function get_fourrieres(){
-        return DB::$db->query("SELECT * FROM fourriere ORDER BY f_localite")->fetchAll();
     }
 
     /**
@@ -108,5 +77,7 @@ class Animal{
         $cnx->execute(array($sexe, $anom));
         return $cnx->fetchAll();
     }
+
+
 
 }

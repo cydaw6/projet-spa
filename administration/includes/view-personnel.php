@@ -52,11 +52,11 @@ if (1 == 1 || $_GET["act"] == "add" && $refuge->data["p_id"] == $_SESSION["user"
 }
 
 
-
-if ((1 == 1 && $_GET["act"] == "add-user") || $_GET["act"] == "add" && $refuge->data["p_id"] == $_SESSION["user"]->data["p_id"]) {
+// vérification des droits de modifications (user doit être gérant)
+if ($_GET["act"] == "add-user" && $refuge->data["p_id"] == $_SESSION["user"]->data["p_id"]) {
     include("add-forms/add-personnel.php");
 
-}else if((1 == 1 && $_GET["act"] == "update") || $_GET["act"] == "add" && $refuge->data["p_id"] == $_SESSION["user"]->data["p_id"]) {
+}else if($_GET["act"] == "update" && $refuge->data["p_id"] == $_SESSION["user"]->data["p_id"]) {
     include("add-forms/add-fonction-personnel.php");
 
 } else {
@@ -92,8 +92,10 @@ if($_GET["page"] != 0){
         </div>
     ';
 
+
     foreach ($data_query as $row) {
-        echo '<a href="#" class="row-data-a">
+        if($row["p_id"] != $_SESSION["user"]->data["p_id"]){
+            echo '<a href="'.$base_url.http_build_query(array("idref"=> $refuge->data["r_id"], "view" => "info-p", "idp" => $row["p_id"])).'" class="row-data-a">
                 <div class="row-data row" >
                     <div class="col">
                         <p class="">' . $row["p_prenom"] . '&nbsp;' . $row["p_nom"] .'</p>
@@ -103,4 +105,6 @@ if($_GET["page"] != 0){
                     </div>
                 </div>
              </a>';
+        }
+
     }

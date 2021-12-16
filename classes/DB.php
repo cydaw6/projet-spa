@@ -69,22 +69,41 @@ class DB
 
     /*         Fonctions utiles au projet        */
     /* 
-    Animal:
-        get_vaccins()
-        get_vaccins_by_espece()
-        get_particuliers()
 
-    Personnel:
-        hash_all_psswds()
-        
+     */
 
+    /**
+     * Renvoie toutes les fourrière dans tableau
+     * @return mixed
+     */
+    public static function get_fourrieres()
+    {
+        return DB::$db->query("SELECT * FROM fourriere ORDER BY f_localite")->fetchAll();
+    }
 
+    /**
+     * Renvoie tous les vaccins par espece
+     */
+    public static function get_vaccins_by_espece()
+    {
+        //return DB::$db->query("SELECT * FROM vaccin natural join espece ORDER BY v_nom, e_nom")->fetchAll();
+        return array();
+    }
 
+    /**
+     * renvoie l'espèce de l'animal
+     */
+    public static function get_especes()
+    {
+        return DB::$db->query("SELECT * FROM espece")->fetchAll();
+    }
 
-
-
-    */
-
-
+    /**
+     * Renvoie tous les vaccins
+     */
+    public static function get_vaccins()
+    {
+        return DB::$db->query("SELECT * FROM vaccin ORDER BY v_nom")->fetchAll();
+    }
 }
 

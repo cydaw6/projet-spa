@@ -2,15 +2,16 @@
 
 $view_name = "fa";
 
-/**
- *
- *  Vérifier que l'animal appartient bien aux refuge
- *
- *
- */
+
 
 
 $animal = Animal::get_animal_by_id($_GET['aid']);
+$adata = $animal->get_all_data();
+// on vérifie que l'animal appartient au refuge (définie lors de la connexion)
+// verification $refuge et refuge du personnel est fait dans fiche-refuge.php
+if($refuge->data["r_id"] != $adata["dernier_refuge"]){
+    goto apresInfoAnimal;
+}
 ?>
 
 
@@ -169,15 +170,15 @@ echo '
 
 
 
+apresInfoAnimal:
 
-    echo '    
+echo '    
         </div>
     </div>
     <br>
     <div class=" row" >
     
     </div>
-
 
 ';
 

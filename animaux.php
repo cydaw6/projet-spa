@@ -58,7 +58,7 @@ $animaux = Animal::search_animaux(
                             <label for="espece">Espece</label>
                             <select class="selectpicker show-tick form-control" name="espece[]" id="espece" multiple>
                                 <?php
-                                foreach (Animal::get_especes() as $row) {
+                                foreach (DB::get_especes() as $row) {
                                     echo '<option value="' . $row["e_id"] . '">' . $row["e_nom"] . '</option>';
                                 }
                                 ?>

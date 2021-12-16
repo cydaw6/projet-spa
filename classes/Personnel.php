@@ -32,10 +32,13 @@ class Personnel
     /**
      * Renvoie les données d'un personnel
      */
-    public static function get_personnel_by_id($idp){
+    public static function get_personnel_by_id($idp): Personnel
+    {
+        $p = new Personnel();
         $cnx = DB::$db->prepare("SELECT * FROM personnel WHERE p_id = ?");
         $cnx->execute(array($idp));
-        return $cnx->fetch();
+        $p->data = $cnx->fetch();
+        return $p;
     }
 
     /**
@@ -76,7 +79,7 @@ class Personnel
      */
     public static function get_personnel($idref, $nom_complet, $fonctions, $limit = MAX_LIMIT, $offset = 0){
         $cnx = DB::$db->prepare("
-                                SELECT DISTINCT p.p_nom, p.p_prenom, p.p_tel
+                                SELECT DISTINCT p.p_id, p.p_nom, p.p_prenom, p.p_tel
                                 FROM exerce e
                                 JOIN fonction f ON f.fc_id = e.fc_id
                                 JOIN refuge r ON r.r_id = e.r_id
@@ -93,7 +96,13 @@ class Personnel
     }
 
     public static function get_fonctions(){
-        return DB::$db->query("SELECT * FROM fonction;")->fetchAll();
+        return DB::$db->query("SELECT * FROM fonction ")->fetchAll();
+    }
+
+    public function get_personnel_fonctions(){
+        $cnx = DB::$db->prepare("SELECT * FROM exerce f JOIN refuge r ON r.r_id = f.r_id  NATURAL JOIN fonction WHERE f.p_id = ?");
+        $cnx->execute(array($this->data["p_id"]));
+        return $cnx->fetchAll();
     }
 
     public function exerce_in_refuge($idref): bool

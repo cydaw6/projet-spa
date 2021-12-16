@@ -12,7 +12,7 @@ echo '
         <div class="col">
             <h4 class=""><b>' . $refuge->data["r_nom"] .'</b></h4>
             
-            <p class=""> <b>Gérant</b> : '.$gerant["p_prenom"].' '. $gerant["p_nom"].'</p>
+            <p class=""> <b>Gérant</b> : '.$gerant->data["p_prenom"].' '. $gerant->data["p_nom"].'</p>
 
         </div>
         <div class="col text-lg-end">

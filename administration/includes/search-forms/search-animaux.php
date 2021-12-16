@@ -16,7 +16,7 @@
             <select name="espece" id="espece" class="form-control selectpicker">
                 <option value="all" selected>Toutes</option>
                 <?php
-                foreach(Animal::get_especes() as  $row){
+                foreach(DB::get_especes() as $row){
                     echo '<option value="'.$row["e_id"].'">'.$row["e_nom"].'</option>';
                 }
                 ?>

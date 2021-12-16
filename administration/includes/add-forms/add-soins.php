@@ -102,7 +102,7 @@ if(isset($_POST["add-send"])){
             <select name="add-v-id" class="selectpicker show-tick form-control " required>
                 <option value="-1" selected> Aucun </option>
                 <?php
-                foreach(Animal::get_vaccins() as  $row){
+                foreach(DB::get_vaccins() as $row){
                     echo '<option value="'.$row["v_id"].'">'.$row["v_nom"].'</option>';
                 }
                 ?>
