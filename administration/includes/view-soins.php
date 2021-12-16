@@ -91,7 +91,7 @@ echo '
     ';
 
 foreach ($data_query as $row) {
-    echo '<a href="#" class="row-data-a">
+    echo '<a href="'.$base_url.http_build_query(array("idref"=> $refuge->data["r_id"], "view" => "info-s", "ids" => $row["s_id"])).'" class="row-data-a">
                 <div class="row-data row" >
                     <div class="col">
                         <p class="">' . $row["a_nom"].'</p>

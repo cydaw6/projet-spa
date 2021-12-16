@@ -105,5 +105,21 @@ class DB
     {
         return DB::$db->query("SELECT * FROM vaccin ORDER BY v_nom")->fetchAll();
     }
+
+    /*
+     * Renvoie les informations d'un soin selon son identifiant
+     */
+    public static function get_soin_by_id($ids){
+        $cnx = DB::$db->prepare("SELECT * 
+                                FROM soin s
+                                JOIN personnel p ON p.p_id = s.p_id 
+                                JOIN type_soin ts ON ts.ts_id = s.ts_id
+                                JOIN animal a ON a.a_id = s.a_id
+                                LEFT JOIN vaccin v ON v.v_id = s.v_id
+                                WHERE s_id = ?
+        ");
+        $cnx->execute(array($ids));
+        return $cnx->fetch();
+    }
 }
 

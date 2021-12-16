@@ -170,7 +170,7 @@ class Refuge{
 
     }
 
-    public static function check_capacité($r_id): int
+    public static function check_capacite($r_id): int
     {
         $r =  Refuge::get_refuge_data_by_id($r_id);
         $count = count(($r->get_animals("", "all")));

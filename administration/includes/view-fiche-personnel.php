@@ -34,7 +34,7 @@ if($_GET["idp"] != $_SESSION["user"]->data["p_id"]){
     echo '
 
     <div class=" row" >
-        <div class="col-md-5">
+        <div class="col-md-6">
             <h4 class=""><b>'. $p["p_prenom"] .' ' . $p["p_nom"] .'</b></h4>
             <p class=""> <b>Tel</b>: '.trim(strrev(chunk_split(strrev($p["p_tel"]),2, ' '))).'</p>
             ';
@@ -93,7 +93,7 @@ if($_GET["idp"] != $_SESSION["user"]->data["p_id"]){
             }
             ?>
         </div>
-<div class="col-md-4 text-lg-end" >
+<div class="col-md-6 text-lg-end" >
     <div class="row">
         <h4>Fonctions</h4>
     </div>

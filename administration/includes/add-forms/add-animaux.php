@@ -4,7 +4,7 @@ $err_msg = "";
 
 if(isset($_POST["add-send"])) {
 
-    if (Refuge::check_capacité($refuge->data["r_id"])) {
+    if (Refuge::check_capacite($refuge->data["r_id"])) {
         if ($refuge->add_animal(
             $_POST["add-nom"],
             ($_POST["add-date"] ?? null),

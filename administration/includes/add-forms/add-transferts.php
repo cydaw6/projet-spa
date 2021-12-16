@@ -2,7 +2,7 @@
 $err_msg = "";
 
 if(isset($_POST["add-send"])){
-    if(Refuge::check_capacité($_POST["rf"])){
+    if(Refuge::check_capacite($_POST["rf"])){
         if(Refuge::transferer($refuge->data["r_id"], $_POST["add-a-id"], $_POST["rf"])){
             echo '<div class=" row" >
                         <div class="col text-lg-center">
@@ -52,7 +52,7 @@ if(isset($_POST["add-send"])){
                 <?php
                 foreach(Refuge::get_all_refuge() as $row){
 
-                    if($row["r_id"] != $refuge->data["r_id"] && Refuge::check_capacité($row["r_id"])){
+                    if($row["r_id"] != $refuge->data["r_id"] && Refuge::check_capacite($row["r_id"])){
                         echo '<option value="'.$row["r_id"].'">'.$row["r_nom"].'</option>';
                     }
                 }

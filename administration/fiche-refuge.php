@@ -158,6 +158,11 @@ if(!$user->exerce_in_refuge($refuge->data["r_id"])){
                                             include("includes/view-fiche-personnel.php");
                                         }
                                     }
+                                    elseif($_SESSION["view"] === "info-s"){
+                                        if(isset($_GET["ids"])){
+                                            include("includes/view-fiche-soin.php");
+                                        }
+                                    }
 
                                     if($_SESSION["view"] != "infos"){
                                         include("includes/pagination.php");
