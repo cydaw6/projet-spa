@@ -1,3 +1,6 @@
+<?php
+        require_once("./classes/__init__.php");
+?>
 <!doctype html>
 <html lang="fr">
   <head>
@@ -19,7 +22,6 @@
   <body>
 
       <?php
-        require_once("./classes/__init__.php");
         require("./global-includes/header.php");
         $cnx = DB::$db->query("SELECT COUNT(*) nbr FROM animal WHERE a_date_adoption IS NULL AND a_date_deces IS NULL");
         // basename(dirname(__FILE__));

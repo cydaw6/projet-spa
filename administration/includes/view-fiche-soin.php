@@ -11,10 +11,7 @@ if(!($s = DB::get_soin_by_id($_GET["ids"]))){
 
 ?>
 
-
-
 <br>
-
 <span class="page-btn">
         <a href="./fiche-refuge.php?idref=<?php echo $refuge->data["r_id"]."&view=soins"; ?>" class="add">
             <i class="fas fa-arrow-left fa-2x left"></i>
@@ -23,9 +20,6 @@ if(!($s = DB::get_soin_by_id($_GET["ids"]))){
 <br><br><br>
 
 
-<div class="container">
-
-</div>
 <?php
     echo '
         <div class=" row" >
@@ -52,4 +46,4 @@ if(!($s = DB::get_soin_by_id($_GET["ids"]))){
 noSoin:
 ?>
 
-</div>
+

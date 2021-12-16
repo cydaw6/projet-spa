@@ -22,7 +22,9 @@ class Personnel
             $user = new Personnel();
             $user->data = array_slice($personnel, 0 , -2);
             $user->identifiants = array_slice($personnel, -2);
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
             $_SESSION["user"] = $user;
             return true;
         }

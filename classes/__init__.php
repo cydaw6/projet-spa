@@ -11,3 +11,7 @@ $DB = DB::getInstance();
 $db = DB::$db;
 //
 const MAX_LIMIT = 10000;
+//error_reporting(E_ERROR | E_PARSE);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}

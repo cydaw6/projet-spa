@@ -1,4 +1,6 @@
-
+<?php
+require_once("./classes/__init__.php");
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -26,7 +28,7 @@
 <body>
 
 <?php
-require_once("./classes/__init__.php");
+
 require_once("./global-includes/header.php");
 
 $animaux = array();

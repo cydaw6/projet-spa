@@ -1,7 +1,5 @@
 <?php
 require_once("../classes/__init__.php");
-session_start();
-
 
 // nom de vue passée via GET devient celle par défaut
 if(isset($_GET["view"])){
