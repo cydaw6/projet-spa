@@ -1,55 +1,62 @@
 <?php
 $view_name = "personnel";
+if($refuge->data["p_id"] === $_SESSION["user"]->data["p_id"]){
 
-if (1 == 1 || $_GET["act"] == "add" && $refuge->data["p_id"] == $_SESSION["user"]->data["p_id"]) {
-    ?>
-    <div class="row">
-        <?php
-        $cpyget = $_GET;
-        if($_GET["act"] == "update"){
-            $cpyget["act"] = "search";
-            $url1 = $base_url.http_build_query($cpyget);
-            $cpyget["act"] = "add-user";
-            $url2 = $base_url.http_build_query($cpyget);
 
-            echo '
-            <p>
-                <span class="page-btn">
-                    <a href="'. $url1.'" class="add"> 
-                        <i class="fas fa-search fa-2x right"></i> </a> 
-                    <a href="'.$url2.'" class="add">
-                        <i class="fas fa-user-plus fa-2x left"></i>
-                    </a>
-                </span>
-            </p>
-        ';
-        }else if($_GET["act"] == "add-user"){
-            $cpyget["act"] = "search";
-            $url1 = $base_url.http_build_query($cpyget);
-            $cpyget["act"] = "update";
-            $url2 = $base_url.http_build_query($cpyget);
-            echo '
-            <p>
-                <span class="page-btn">
-                    <a href="'. $url1.'" class="add"> 
-                        <i class="fas fa-search fa-2x right"></i> </a> 
-                    <a href="'.$url2.'" class="add">
-                        <i class="fas fa-user-edit fa-2x left"></i></i>
-                    </a>
-                </span>
-            </p>
-        ';
-        }else{
-            $cpyget["act"] = "update";
-            echo '
-            <span class="page-btn"><a href="'. $base_url.http_build_query($cpyget).'" class="add"><i class="fas fa-user-edit fa-2x right"></i></a></span>
-        ';
-        }
         ?>
-    </div>
-    <?php
+        <div class="row">
+            <?php
+            $cpyget = $_GET;
+            if($_GET["act"] == "update"){
+                $cpyget["act"] = "search";
+                $url1 = $base_url.http_build_query($cpyget);
+                $cpyget["act"] = "add-user";
+                $url2 = $base_url.http_build_query($cpyget);
+
+                echo '
+                    <p>
+                        <span class="page-btn">
+                            <a href="'. $url1.'" class="add"> 
+                                <i class="fas fa-search fa-2x right"></i> </a> 
+                            <a href="'.$url2.'" class="add">
+                                <i class="fas fa-user-plus fa-2x left"></i>
+                            </a>
+                        </span>
+                    </p>
+                ';
+            }else if($_GET["act"] == "add-user"){
+
+                $cpyget["act"] = "search";
+                $url1 = $base_url.http_build_query($cpyget);
+                $cpyget["act"] = "update";
+                $url2 = $base_url.http_build_query($cpyget);
+                echo '
+                    <p>
+                        <span class="page-btn">
+                            <a href="'. $url1.'" class="add"> 
+                                <i class="fas fa-search fa-2x right"></i> </a> 
+                            <a href="'.$url2.'" class="add">
+                                <i class="fas fa-user-edit fa-2x left"></i></i>
+                            </a>
+                        </span>
+                    </p>
+                ';
+
+            }else{
+
+                $cpyget["act"] = "update";
+                echo '
+                    <span class="page-btn"><a href="'. $base_url.http_build_query($cpyget).'" class="add"><i class="fas fa-user-edit fa-2x right"></i></a></span>
+                ';
+            }
+            ?>
+        </div>
+        <?php
+
+
 
 }
+
 
 
 // vérification des droits de modifications (user doit être gérant)
