@@ -61,6 +61,7 @@ class Animal{
         return DB::$db->query("SELECT * FROM particulier ORDER BY pa_nom, pa_adresse");
     }
 
+    
     public static function search_animaux($idr, $anom, $espece, $sexe){
         $cnx = DB::$db->prepare("SELECT * 
                                 FROM dernier_refuge dr

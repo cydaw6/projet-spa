@@ -122,6 +122,10 @@ class Refuge{
         return $cnx->fetchAll();
     }
 
+    /**
+     * Permet de rechercher des animaux correspondants à certains 
+     * critères
+     */
     public function get_animals($nom, $espece, $limit = MAX_LIMIT, $offset = 0, $deces = false, $adopte = false){
 
         $q = " ";
@@ -149,6 +153,10 @@ class Refuge{
         return $cnx->fetchAll();
     }
 
+    /**
+     * Ajoute un soin
+     * renvoie vrai si l'ajout à réussi
+     */
     public function add_soin($p_id, $a_id, $ts_id, $v_id, $comm){
         $cnx = DB::$db->prepare("
             INSERT INTO soin VALUES(DEFAULT, DATE_TRUNC('second', NOW()), ?, ?, ?, ?, ?)
@@ -156,6 +164,9 @@ class Refuge{
         return $cnx->execute(array($comm, $p_id, $a_id, $v_id, $ts_id));
     }
 
+    /**
+     * Renvoi tous le personnel
+     */
     public static function get_all_personnel(){
         return DB::$db->query("SELECT * FROM personnel ORDER BY p_prenom, p_nom")->fetchAll();
     }
@@ -170,6 +181,10 @@ class Refuge{
 
     }
 
+    /**
+     * Renvoi vrai si le refuge (donné par l'id)
+     * possède encore de la place
+     */
     public static function check_capacite($r_id): int
     {
         $r =  Refuge::get_refuge_data_by_id($r_id);
@@ -177,11 +192,17 @@ class Refuge{
         return $count < $r->data["r_capacite"];
     }
 
+    /**
+     * Effectue le transfert d'un animal
+     */
     public static function transferer($id_orig, $id_animal, $id_dest){
         $cnx = DB::$db->prepare("INSERT INTO transfert VALUES(DEFAULT, NOW(), ?, ?, ?)");
         return $cnx->execute(array($id_orig, $id_animal, $id_dest));
     }
 
+    /**
+     * Permet de rechercher des refuges correspondants à certains critères
+     */
     public static function search_refuges($nom, $dep){
         $cnx = DB::$db->prepare("SELECT * 
                                     FROM refuge 
@@ -193,6 +214,9 @@ class Refuge{
         return $cnx->fetchAll();
     }
 
+    /**
+     * Renvoi tous les refuges de la spa
+     */
     public static function get_all_refuge(){
         $cnx = DB::$db->query("SELECT * FROM refuge ORDER BY r_nom");
         return $cnx->fetchAll();
@@ -213,6 +237,9 @@ class Refuge{
         return $cnx->execute(array($nom, $date_n, $sexe, $comm, $e_id, $f_id, $this->data["r_id"]));
     }
 
+    /**
+     * Renvoi les vaccins à effectuer pour chaque animal du refuge
+     */
     public function liste_rappel_vaccin(){
         $cnx = DB::$db->prepare("SELECT
                                     DISTINCT

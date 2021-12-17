@@ -101,12 +101,19 @@ class Personnel
         return DB::$db->query("SELECT * FROM fonction ")->fetchAll();
     }
 
+    /**
+     * Renvoi les la foncction par refuge du personnel
+     */
     public function get_personnel_fonctions(){
         $cnx = DB::$db->prepare("SELECT * FROM exerce f JOIN refuge r ON r.r_id = f.r_id  NATURAL JOIN fonction WHERE f.p_id = ?");
         $cnx->execute(array($this->data["p_id"]));
         return $cnx->fetchAll();
     }
 
+    /**
+     * Renvoir vrai si le personnel a une fonction dans le refuge
+     * selon l'id du refuge donné en paramètre
+     */
     public function exerce_in_refuge($idref): bool
     {
 
@@ -116,6 +123,13 @@ class Personnel
         return (bool) $params;
     }
 
+    /**
+     * Renvoi les informations d'un personnel si pour
+     * certaines données il existe une correspondance
+     * 
+     * Comparaison sur (tel, nom, prenom)
+     * et numsecu 
+     */
     public static function verif_exist_personnel($nom, $prenom, $num_secu, $tel){
         $cnx = DB::$db->prepare("
                                 SELECT
@@ -128,6 +142,9 @@ class Personnel
         return $cnx->fetchAll();
     }
 
+    /**
+     * Ajoute un personnel
+     */
     public static function add_personnel($nom, $prenom, $num_secu, $tel, $adresse, $localite, $codep, $login){
         $cnx = DB::$db->prepare("INSERT INTO personnel
             VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING p_id
@@ -136,6 +153,9 @@ class Personnel
         return $cnx->fetch()["p_id"];
     }
 
+    /**
+     * Renvoi l'id des identifiants de connexion nouvellement créés
+     */
     public static function create_logins($nom, $prenom){
         $login = substr($prenom, 0, 3);
         $login .= substr($nom, 0, 1);
