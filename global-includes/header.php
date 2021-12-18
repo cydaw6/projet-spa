@@ -2,9 +2,9 @@
 <?php
 // $path =  '/'.basename(dirname(__FILE__));
 // $path = dirname($_SERVER["PHP_SELF"]);
-//define("ROOT","/~***REMOVED***.***REMOVED***/");
+//define("ROOT","/~antoine.bastos/");
 //const ROOT = "/";
-const ROOT = "/~***REMOVED***.***REMOVED***/";
+const ROOT = "/~antoine.bastos/";
 
 
 ?>

@@ -6,19 +6,15 @@ class DB
     public static $db;
 
     /*     Identifiants         */
-    //private $host = "***REMOVED***";
-    //private $db_name = "spa";
-    //private $user = "***REMOVED***";
-    //private $pass = "***REMOVED***";
 
-    /*GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to "***REMOVED***";
-    GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to "***REMOVED***";
-    GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public to "***REMOVED***";*/
+    /*GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to "projet.spa";
+    GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to "projet.spa";
+    GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public to "projet.spa";*/
 
-    private $host = "sqletud.u-pem.fr";
-    private $db_name = "***REMOVED***";
-    private $user = "***REMOVED***.***REMOVED***";
-    private $pass = "***REMOVED***";
+    private $host = "#";
+    private $db_name = "#";
+    private $user = "#";
+    private $pass = "#";
 
     public static function getInstance(): DB
     {
